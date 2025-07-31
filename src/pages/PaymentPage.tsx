@@ -15,9 +15,8 @@ const PaymentPage: React.FC = () => {
         <meta name="robots" content="noindex, nofollow" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         
-        {/* Security headers */}
+        {/* Security headers - X-Frame-Options removed as it should be set via HTTP headers only */}
         <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
-        <meta httpEquiv="X-Frame-Options" content="DENY" />
         <meta httpEquiv="X-XSS-Protection" content="1; mode=block" />
         <meta httpEquiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
         

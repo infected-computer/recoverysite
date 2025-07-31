@@ -69,8 +69,14 @@ export const validateEnvironment = (): boolean => {
 // Get configuration with environment validation
 export const getPaymentConfig = () => {
   console.log("Attempting to get payment config...");
-  console.log("VITE_LEMON_SQUEEZY_API_KEY:", import.meta.env.VITE_LEMON_SQUEEZY_API_KEY);
-  console.log("VITE_LEMON_SQUEEZY_STORE_ID:", import.meta.env.VITE_LEMON_SQUEEZY_STORE_ID);
+  console.log("VITE_LEMON_SQUEEZY_API_KEY:", import.meta.env.VITE_LEMON_SQUEEZY_API_KEY ? "Set" : "Not set");
+  console.log("VITE_LEMON_SQUEEZY_STORE_ID:", import.meta.env.VITE_LEMON_SQUEEZY_STORE_ID ? "Set" : "Not set");
+
+  // In development mode, allow missing environment variables
+  if (import.meta.env.DEV) {
+    console.warn("Running in development mode - payment system may not be fully functional");
+    return PAYMENT_CONFIG;
+  }
 
   if (!validateEnvironment()) {
     console.error("Payment system configuration validation failed.");

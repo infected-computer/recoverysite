@@ -28,22 +28,22 @@ const AccessibilityChecker: React.FC<AccessibilityCheckerProps> = ({ children })
         const axeModule = await import('@axe-core/react');
         axe = axeModule.default;
         
-        // Configure axe
+        // Configure axe with proper configuration
         axe(React, React.DOM, 1000, {
-          rules: {
+          rules: [
             // Enable all WCAG 2.2 AA rules
-            'color-contrast': { enabled: true },
-            'color-contrast-enhanced': { enabled: true },
-            'focus-order-semantics': { enabled: true },
-            'hidden-content': { enabled: true },
-            'label-title-only': { enabled: true },
-            'link-in-text-block': { enabled: true },
-            'meta-refresh': { enabled: true },
-            'p-as-heading': { enabled: true },
-            'region': { enabled: true },
-            'skip-link': { enabled: true },
-            'tabindex': { enabled: true }
-          },
+            { id: 'color-contrast', enabled: true },
+            { id: 'color-contrast-enhanced', enabled: true },
+            { id: 'focus-order-semantics', enabled: true },
+            { id: 'hidden-content', enabled: true },
+            { id: 'label-title-only', enabled: true },
+            { id: 'link-in-text-block', enabled: true },
+            { id: 'meta-refresh', enabled: true },
+            { id: 'p-as-heading', enabled: true },
+            { id: 'region', enabled: true },
+            { id: 'skip-link', enabled: true },
+            { id: 'tabindex', enabled: true }
+          ],
           tags: ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']
         });
 

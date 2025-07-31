@@ -3,7 +3,7 @@ import { PaymentFormData, PaymentFormProps, ValidationError } from '../../types/
 import { validatePaymentForm, formatAmount, sanitizeInput } from '../../utils/paymentValidation';
 import { useSecurity } from '../../hooks/useSecurity';
 import { useErrorHandler } from '../../hooks/useErrorHandler';
-import { PAYMENT_CONFIG } from '../../config/payment';
+import { PAYMENT_CONFIG, getPaymentConfig } from '../../config/payment';
 import { lemonSqueezyService } from '../../services/lemonSqueezyService';
 import { transactionLogger } from '../../services/transactionLogger';
 import { Transaction, TransactionStatus } from '../../types/payment';

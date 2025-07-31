@@ -83,7 +83,12 @@ function App() {
           <AccessibilityChecker>
             <Toaster />
             <Sonner />
-            <BrowserRouter>
+            <BrowserRouter
+              future={{
+                v7_startTransition: true,
+                v7_relativeSplatPath: true
+              }}
+            >
               <NavigationLoader />
               <Suspense fallback={<LoadingSpinner />}>
                 <Routes>

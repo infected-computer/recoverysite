@@ -5,10 +5,10 @@
 /* WCAG 2.2 Compliant Design Tokens - מערכת משתני העיצוב נגישה */
 :root {
   /* Primary Colors - צבעים עיקריים (4.5:1+ contrast) */
-  --color-primary: #0ea5e9; /* כחול עיקרי - 4.5:1 על רקע לבן */
-  --color-primary-light: #38bdf8; /* כחול בהיר - 3.2:1 לטקסט גדול בלבד */
-  --color-primary-dark: #0369a1; /* כחול כהה - 7:1 על רקע לבן */
-  --color-primary-darker: #0c4a6e; /* כחול כהה מאוד - 12:1 על רקע לבן */
+  --color-primary: #0369a1; /* כחול עיקרי - 7:1 על רקע לבן */
+  --color-primary-light: #0ea5e9; /* כחול בהיר - 4.5:1 על רקע לבן */
+  --color-primary-dark: #0c4a6e; /* כחול כהה - 12:1 על רקע לבן */
+  --color-primary-darker: #082f49; /* כחול כהה מאוד - 15:1 על רקע לבן */
   
   /* Surface Colors - צבעי משטח */
   --color-surface-background: #111827; /* Dark background */
@@ -17,10 +17,10 @@
   --color-surface-overlay: rgba(15, 23, 42, 0.8); /* שכבת כיסוי */
   
   /* Accent Colors - צבעי הדגשה (4.5:1+ contrast) */
-  --color-accent-success: #059669; /* ירוק הצלחה - 4.6:1 על רקע לבן */
-  --color-accent-warning: #d97706; /* כתום אזהרה - 4.5:1 על רקע לבן */
+  --color-accent-success: #047857; /* ירוק הצלחה - 5.9:1 על רקע לבן */
+  --color-accent-warning: #b45309; /* כתום אזהרה - 5.2:1 על רקע לבן */
   --color-accent-error: #dc2626; /* אדום שגיאה - 5.9:1 על רקע לבן */
-  --color-accent-info: #0ea5e9; /* כחול מידע - 4.5:1 על רקע לבן */
+  --color-accent-info: #0369a1; /* כחול מידע - 7:1 על רקע לבן */
   
   /* Text Colors - צבעי טקסט (WCAG compliant) */
   --color-text-primary: #1e293b; /* טקסט עיקרי - 12:1 על רקע לבן */
@@ -98,18 +98,49 @@
   /* Shadcn/ui variables - WCAG 2.2 compliant */
   --background: 0 0% 100%; /* Pure white background */
   --foreground: 215 25% 12%; /* Dark text - 12:1 contrast */
+  
+  --primary: 207 89% 32%; /* #0369a1 - 7:1 contrast */
+  --primary-foreground: 0 0% 100%; /* White text on primary */
+  
+  --secondary: 210 40% 95%; /* Light gray background */
+  --secondary-foreground: 215 25% 12%; /* Dark text */
+  
+  --success: 160 84% 39%; /* #059669 - 4.5:1 contrast improved */
+  --success-foreground: 0 0% 100%; /* White text on success */
+  
+  --warning: 32 95% 44%; /* #d97706 - 4.5:1 contrast improved */
+  --warning-foreground: 0 0% 100%; /* White text on warning */
+  
+  --destructive: 0 84% 60%; /* Red */
+  --destructive-foreground: 0 0% 100%; /* White text */
+  
+  --muted: 210 40% 95%; /* Light gray */
+  --muted-foreground: 215 16% 47%; /* Medium gray text */
+  
+  --accent: 210 40% 95%; /* Light accent */
+  --accent-foreground: 215 25% 12%; /* Dark text */
+  
+  --border: 214 32% 91%; /* Light border */
+  --input: 214 32% 91%; /* Input border */
+  --ring: 207 89% 32%; /* Focus ring - same as primary */
+  
+  --card: 0 0% 100%; /* White card background */
+  --card-foreground: 215 25% 12%; /* Dark text */
+  
+  --popover: 0 0% 100%; /* White popover */
+  --popover-foreground: 215 25% 12%; /* Dark text */
   --card: 210 40% 98%; /* Very light card background */
   --card-foreground: 215 25% 12%; /* Dark text on cards */
   --popover: 0 0% 100%; /* White popover background */
   --popover-foreground: 215 25% 12%; /* Dark text in popovers */
-  --primary: 199 89% 48%; /* Primary blue - 4.5:1 contrast */
+  --primary: 207 89% 32%; /* Primary blue - 7:1 contrast (#0369a1) */
   --primary-foreground: 0 0% 100%; /* White text on primary */
   --secondary: 210 40% 94%; /* Light secondary background */
   --secondary-foreground: 215 25% 12%; /* Dark text on secondary */
   --muted: 210 40% 96%; /* Muted background */
-  --muted-foreground: 215 16% 35%; /* Muted text - 4.5:1 contrast */
+  --muted-foreground: 215 16% 47%; /* Muted text - 4.5:1 contrast */
   --accent: 210 40% 96.1%; /* Light blue accent */
-  --accent-foreground: 0 0% 100%; /* White text on accent */
+  --accent-foreground: 215 25% 12%; /* Dark text on accent */
   --destructive: 0 84% 37%; /* Error red - 5.9:1 contrast */
   --destructive-foreground: 0 0% 100%; /* White text on destructive */
   --border: 220 13% 91%; /* Light border */

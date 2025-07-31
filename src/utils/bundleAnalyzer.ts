@@ -19,6 +19,13 @@ interface ChunkInfo {
 export class BundleAnalyzer {
   private static metrics: BundleMetrics | null = null;
   private static observers: PerformanceObserver[] = [];
+  private static performanceMetrics = {
+    longTasks: [] as Array<{
+      duration: number;
+      startTime: number;
+      timestamp: number;
+    }>
+  };
 
   /**
    * Initialize bundle performance monitoring
@@ -83,12 +90,39 @@ export class BundleAnalyzer {
    * Monitor long tasks that block the main thread
    */
   private static monitorLongTasks(): void {
+    let logTimeout: NodeJS.Timeout | null = null;
+    
     const observer = new PerformanceObserver((list) => {
       const entries = list.getEntries();
       
       entries.forEach((entry) => {
         if (entry.duration > 50) {
-          console.warn(`Long task detected: ${entry.duration}ms`, entry);
+          // Track performance metrics
+          this.performanceMetrics.longTasks.push({
+            duration: entry.duration,
+            startTime: entry.startTime,
+            timestamp: Date.now()
+          });
+          
+          // Debounce logging to prevent console spam
+          if (import.meta.env.DEV && !logTimeout) {
+            logTimeout = setTimeout(() => {
+              const recentTasks = this.performanceMetrics.longTasks.filter(
+                task => Date.now() - task.timestamp < 5000
+              );
+              
+              if (recentTasks.length > 0) {
+                const avgDuration = recentTasks.reduce((sum, task) => sum + task.duration, 0) / recentTasks.length;
+                console.warn(`⚠️ ${recentTasks.length} long task(s) detected (avg: ${avgDuration.toFixed(1)}ms)`);
+                
+                if (avgDuration > 100) {
+                  console.warn('💡 Consider code splitting or lazy loading for better performance');
+                }
+              }
+              
+              logTimeout = null;
+            }, 1000);
+          }
         }
       });
     });
@@ -97,7 +131,9 @@ export class BundleAnalyzer {
       observer.observe({ entryTypes: ['longtask'] });
       this.observers.push(observer);
     } catch (error) {
-      console.warn('Long task observation not supported:', error);
+      if (import.meta.env.DEV) {
+        console.warn('Long task observation not supported:', error);
+      }
     }
   }
 
@@ -140,6 +176,20 @@ export class BundleAnalyzer {
    */
   static getMetrics(): BundleMetrics | null {
     return this.metrics;
+  }
+
+  /**
+   * Get performance metrics
+   */
+  static getPerformanceMetrics() {
+    return this.performanceMetrics;
+  }
+
+  /**
+   * Clear performance metrics
+   */
+  static clearPerformanceMetrics(): void {
+    this.performanceMetrics.longTasks = [];
   }
 
   /**
@@ -189,6 +239,7 @@ export class BundleAnalyzer {
   static cleanup(): void {
     this.observers.forEach(observer => observer.disconnect());
     this.observers = [];
+    this.clearPerformanceMetrics();
   }
 }
 
