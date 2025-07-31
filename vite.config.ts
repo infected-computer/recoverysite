@@ -4,8 +4,6 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 // import { sitemapPlugin, createSitemapDevMiddleware } from "./src/plugins/vite-sitemap-plugin";
 
-import { visualizer } from "rollup-plugin-visualizer";
-
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   base: '/',
@@ -19,7 +17,6 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     mode === 'development' && componentTagger(),
-    visualizer({ open: true }),
 
     // Sitemap plugin disabled temporarily due to import issues
     // mode === 'production' && sitemapPlugin({

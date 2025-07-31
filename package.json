@@ -79,7 +79,11 @@
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^0.9.3",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "@vitejs/plugin-react-swc": "^3.11.0",
+    "terser": "^5.43.1",
+    "vite": "^5.4.1",
+    "vite-plugin-ssr": "^0.4.142"
   },
   "devDependencies": {
     "@axe-core/react": "^4.10.2",
@@ -91,7 +95,6 @@
     "@types/node": "^22.5.5",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react-swc": "^3.11.0",
     "autoprefixer": "^10.4.20",
     "axe-core": "^4.10.3",
     "eslint": "^9.9.0",
@@ -101,12 +104,8 @@
     "jest-axe": "^10.0.0",
     "lovable-tagger": "^1.1.7",
     "postcss": "^8.4.47",
-    "rollup-plugin-visualizer": "^6.0.3",
     "tailwindcss": "^3.4.11",
-    "terser": "^5.43.1",
     "typescript": "^5.5.3",
-    "typescript-eslint": "^8.0.1",
-    "vite": "^5.4.1",
-    "vite-plugin-ssr": "^0.4.142"
+    "typescript-eslint": "^8.0.1"
   }
 }
