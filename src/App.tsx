@@ -15,6 +15,8 @@ import { injectCriticalCSS } from './utils/layoutShiftPrevention';
 import GoogleAnalytics from './components/analytics/GoogleAnalytics';
 import { getAnalyticsConfig } from './config/analytics';
 import CookieConsent from './components/privacy/CookieConsent';
+import fontLoader from './utils/fontLoader';
+import FontFallbackNotice from './components/ui/FontFallbackNotice';
 
 
 // Lazy load pages for better performance
@@ -55,6 +57,9 @@ function App() {
   useEffect(() => {
     // Inject critical CSS to prevent layout shifts
     injectCriticalCSS();
+
+    // Initialize font optimization
+    fontLoader.initFontOptimization();
 
     // Initialize bundle analyzer
     if (import.meta.env.DEV) {
@@ -131,6 +136,7 @@ function App() {
               </Suspense>
             </BrowserRouter>
             <CookieConsent />
+            <FontFallbackNotice />
           </AccessibilityChecker>
         </TooltipProvider>
       </QueryClientProvider>

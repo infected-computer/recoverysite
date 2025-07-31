@@ -10,7 +10,6 @@ import { useAnalytics, useScrollTracking, useTimeTracking } from "../hooks/useAn
 // Import new SEO components
 import { SEOHead } from "../components/seo/SEOHead";
 import { LocalBusinessSchema } from "../components/seo/LocalBusinessSchema";
-import { TLDRBox, getTLDRContent } from "../components/seo/TLDRBox";
 
 // Import new redesigned components
 import { HomePageHero } from "../components/sections/HeroSlider";
@@ -196,17 +195,6 @@ const Index = () => {
         <main id="main-content" role="main">
           {/* Hero Section */}
           <HomePageHero />
-
-          {/* TL;DR Section */}
-          <section className="py-12 bg-gray-50">
-            <div className="container mx-auto px-4">
-              <TLDRBox 
-                points={getTLDRContent('homepage')}
-                variant="highlighted"
-                className="mb-8"
-              />
-            </div>
-          </section>
 
           {/* Services Section */}
           <div id="services-section">

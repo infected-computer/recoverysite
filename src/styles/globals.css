@@ -2,6 +2,72 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Font Loading Optimization with Better Fallbacks */
+@font-face {
+  font-family: 'Assistant';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: local('Assistant Light'), local('Assistant-Light'),
+       url('https://fonts.gstatic.com/s/assistant/v18/2sDPZGJYnIjSi6H75xXGZr-D.woff2') format('woff2'),
+       url('https://fonts.gstatic.com/s/assistant/v18/2sDPZGJYnIjSi6H75xXGZr-D.woff') format('woff');
+  unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+
+@font-face {
+  font-family: 'Assistant';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Assistant Regular'), local('Assistant-Regular'),
+       url('https://fonts.gstatic.com/s/assistant/v18/2sDOZGJYnIjSi6H75xXGYr-D.woff2') format('woff2'),
+       url('https://fonts.gstatic.com/s/assistant/v18/2sDOZGJYnIjSi6H75xXGYr-D.woff') format('woff');
+  unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+
+@font-face {
+  font-family: 'Assistant';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Assistant SemiBold'), local('Assistant-SemiBold'),
+       url('https://fonts.gstatic.com/s/assistant/v18/2sDPZGJYnIjSi6H75xXGZr-D.woff2') format('woff2'),
+       url('https://fonts.gstatic.com/s/assistant/v18/2sDPZGJYnIjSi6H75xXGZr-D.woff') format('woff');
+  unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+
+@font-face {
+  font-family: 'Assistant';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Assistant Bold'), local('Assistant-Bold'),
+       url('https://fonts.gstatic.com/s/assistant/v18/2sDPZGJYnIjSi6H75xXGZr-D.woff2') format('woff2'),
+       url('https://fonts.gstatic.com/s/assistant/v18/2sDPZGJYnIjSi6H75xXGZr-D.woff') format('woff');
+  unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+
+/* Heebo fallback font */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Heebo Regular'), local('Heebo-Regular'),
+       url('https://fonts.gstatic.com/s/heebo/v21/NGSpv5_NC0k9P_v6ZUCbLRAHxK1EiS2cckOnz02SXQ.woff2') format('woff2');
+  unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Heebo SemiBold'), local('Heebo-SemiBold'),
+       url('https://fonts.gstatic.com/s/heebo/v21/NGSpv5_NC0k9P_v6ZUCbLRAHxK1EiSWcckOnz02SXQ.woff2') format('woff2');
+  unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+
 /* WCAG 2.2 Compliant Design Tokens - מערכת משתני העיצוב נגישה */
 :root {
   /* Primary Colors - צבעים עיקריים (4.5:1+ contrast) */
@@ -40,8 +106,8 @@
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   
-  /* טיפוגרפיה */
-  --font-family-primary: 'Plex Sans Hebrew', 'Space Grotesk', system-ui, sans-serif;
+  /* טיפוגרפיה - עם fallback fonts מקומיים */
+  --font-family-primary: 'Assistant', 'Heebo', 'Rubik', 'Arial', 'Tahoma', system-ui, sans-serif;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;

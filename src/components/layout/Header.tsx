@@ -14,7 +14,7 @@ const navigation = [
   { name: "איך זה עובד", href: "/process" },
   { name: "מאמרים", href: "/articles" },
   { name: "מי אנחנו", href: "/about" },
-  { name: "שאלות ותשובות", href: "/faq" },
+  { name: "שאלות נפוצות", href: "/faq" },
   { name: "יצירת קשר", href: "/contact" },
 ];
 
