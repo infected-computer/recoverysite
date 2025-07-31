@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MessageCircle } from 'lucide-react';
+import { useInteractionTracking } from '@/hooks/useAnalytics';
 
 const WhatsAppIcon = () => (
   <svg
@@ -18,8 +19,10 @@ const WhatsAppIcon = () => (
 
 export const WhatsAppFloat: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const { trackWhatsApp } = useInteractionTracking();
 
   const openWhatsApp = () => {
+    trackWhatsApp('floating_button');
     const message = encodeURIComponent("שלום, אני זקוק לעזרה בשחזור קבצים. אשמח לקבל ייעוץ ראשוני.");
     window.open(`https://wa.me/972536657279?text=${message}`, '_blank');
   };

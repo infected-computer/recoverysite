@@ -5,6 +5,7 @@ import { Footer } from "../components/layout/Footer";
 import { WhatsAppFloat } from "../components/layout/WhatsAppFloat";
 import SEO from "../components/SEO";
 import { useSEO, useBreadcrumbs } from "../hooks/useSEO";
+import { useAnalytics, useScrollTracking, useTimeTracking } from "../hooks/useAnalytics";
 
 // Import new SEO components
 import { SEOHead } from "../components/seo/SEOHead";
@@ -22,6 +23,11 @@ import FAQSummary from "../components/sections/FAQSummary";
 const Index = () => {
   const navigate = useNavigate();
   const breadcrumbs = useBreadcrumbs();
+  
+  // Analytics tracking
+  const analytics = useAnalytics();
+  useScrollTracking();
+  useTimeTracking();
   
   // SEO data for homepage
   const seoData = {

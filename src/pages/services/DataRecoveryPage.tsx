@@ -18,11 +18,22 @@ import { Award } from 'lucide-react';
 import { SEOHead } from "../../components/seo/SEOHead";
 import { ServiceSchema } from "../../components/seo/ServiceSchema";
 import { TLDRBox, getTLDRContent } from "../../components/seo/TLDRBox";
+import { useAnalytics, useScrollTracking, useTimeTracking } from '../../hooks/useAnalytics';
 import { FAQSection, getServiceFAQs } from "../../components/seo/FAQSection";
 import { ExpertProfile } from "../../components/seo/ExpertProfile";
 import { PersonSchema, getExpertProfiles } from "../../components/seo/PersonSchema";
 
 const DataRecoveryPage = () => {
+  // Analytics tracking
+  const analytics = useAnalytics();
+  useScrollTracking();
+  useTimeTracking();
+  
+  // Track service page view
+  React.useEffect(() => {
+    analytics.trackServiceView('data_recovery');
+  }, [analytics]);
+  
   const seoData = {
     title: "שחזור קבצים מתקדם - דוקטור פיקס",
     description: "שירותי שחזור קבצים מקצועיים מכל סוגי האמצעי אחסון. דיסקים קשיחים, SSD, כרטיסי זיכרון ועוד. שיעור הצלחה 97%",

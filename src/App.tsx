@@ -12,6 +12,9 @@ import AccessibilityChecker from './components/accessibility/AccessibilityChecke
 
 import { BundleAnalyzer, ResourcePreloader } from './utils/bundleAnalyzer';
 import { injectCriticalCSS } from './utils/layoutShiftPrevention';
+import GoogleAnalytics from './components/analytics/GoogleAnalytics';
+import { getAnalyticsConfig } from './config/analytics';
+import CookieConsent from './components/privacy/CookieConsent';
 
 
 // Lazy load pages for better performance
@@ -46,6 +49,8 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+  const analyticsConfig = getAnalyticsConfig();
+  
   // Initialize performance monitoring and preloading
   useEffect(() => {
     // Inject critical CSS to prevent layout shifts
@@ -78,6 +83,10 @@ function App() {
 
   return (
     <HelmetProvider>
+      <GoogleAnalytics 
+        trackingId={analyticsConfig.trackingId} 
+        enabled={analyticsConfig.enabled}
+      />
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <AccessibilityChecker>
@@ -121,6 +130,7 @@ function App() {
                 </Routes>
               </Suspense>
             </BrowserRouter>
+            <CookieConsent />
           </AccessibilityChecker>
         </TooltipProvider>
       </QueryClientProvider>

@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils';
 import { sendContactEmail, sendToWhatsApp, ContactFormData } from '@/services/emailService';
 import { useAccessibleColors } from '@/hooks/useAccessibleColors';
 import { ariaUtils } from '@/utils/accessibilityUtils';
+import { useFormTracking } from '@/hooks/useAnalytics';
 
 /* ---------- Types ---------- */
 interface RequestFormProps {
@@ -89,6 +90,7 @@ export const RequestForm: React.FC<RequestFormProps> = ({
   const messageId = useId();
   
   const { colors } = useAccessibleColors();
+  const { trackFormStart, trackFormStep, trackFormSubmit, trackFormError } = useFormTracking('contact_form');
 
   // Validation functions
   const validateField = useCallback((name: string, value: string): string | undefined => {
@@ -180,6 +182,7 @@ export const RequestForm: React.FC<RequestFormProps> = ({
     e.preventDefault();
     
     if (!validateForm()) {
+      trackFormError('validation_failed');
       ariaUtils.announce('יש שגיאות בטופס, אנא תקן אותן', 'assertive');
       return;
     }
@@ -201,6 +204,7 @@ export const RequestForm: React.FC<RequestFormProps> = ({
         }
       }
       
+      trackFormSubmit(true);
       setShowToast(true);
       setFormData({ name: '', phone: '', email: '', message: '' });
       setErrors({});
@@ -208,6 +212,8 @@ export const RequestForm: React.FC<RequestFormProps> = ({
       ariaUtils.announce('הבקשה נשלחה בהצלחה', 'polite');
     } catch (err) {
       console.error('Form submission error:', err);
+      trackFormSubmit(false);
+      trackFormError('submission_failed');
       setFormError('שגיאה בשליחת הטופס. אנא נסה שוב או צור קשר בווצאפ.');
       ariaUtils.announce('שגיאה בשליחת הטופס', 'assertive');
     } finally {

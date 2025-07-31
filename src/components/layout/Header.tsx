@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { useScrollDirection } from '../../hooks/useScrollOptimization';
 import MobileMenu from '../navigation/MobileMenu';
 import { useAccessibleColors } from '@/hooks/useAccessibleColors';
+import { useInteractionTracking } from '@/hooks/useAnalytics';
 
 const navigation = [
   { name: "דף הבית", href: "/" },
@@ -23,6 +24,7 @@ export const Header: React.FC = () => {
   const location = useLocation();
   const scrollDirection = useScrollDirection();
   const { colors } = useAccessibleColors();
+  const { trackWhatsApp } = useInteractionTracking();
 
   // Handle scroll effects
   useEffect(() => {
@@ -35,6 +37,7 @@ export const Header: React.FC = () => {
   }, []);
 
   const openWhatsApp = () => {
+    trackWhatsApp('header');
     const message = encodeURIComponent("שלום, אני זקוק לעזרה בשחזור קבצים. אשמח לקבל ייעוץ ראשוני.");
     window.open(`https://wa.me/972536657279?text=${message}`, '_blank');
   };
