@@ -65,6 +65,13 @@ const PaymentForm: React.FC<Partial<PaymentFormProps>> = ({
 
   // Enforce HTTPS on component mount
   useEffect(() => {
+    console.log("PaymentForm component mounted. Checking config...");
+    try {
+      const config = getPaymentConfig();
+      console.log("Payment config successfully retrieved in PaymentForm:", config);
+    } catch (error) {
+      console.error("Error getting payment config in PaymentForm:", error);
+    }
     enforceHTTPS();
   }, [enforceHTTPS]);
 

@@ -7,6 +7,14 @@ import { Button } from "../../components/ui/button";
 import { Card, CardContent, CardHeader } from "../../components/ui/card";
 import { CheckCircle, Cpu, HardDrive, Wifi, Shield, Wrench, Zap, RefreshCw } from "lucide-react";
 
+// Import new SEO components
+import { SEOHead } from "../../components/seo/SEOHead";
+import { ServiceSchema } from "../../components/seo/ServiceSchema";
+import { TLDRBox, getTLDRContent } from "../../components/seo/TLDRBox";
+import { FAQSection, getServiceFAQs } from "../../components/seo/FAQSection";
+import { ExpertProfile } from "../../components/seo/ExpertProfile";
+import { PersonSchema, getExpertProfiles } from "../../components/seo/PersonSchema";
+
 const SystemRepairPage = () => {
   const seoData = {
     title: "תיקון מערכות מחשב - דוקטור פיקס",
@@ -98,9 +106,21 @@ const SystemRepairPage = () => {
     "שירות מקצועי ואמין"
   ];
 
+  // Get expert data - using David Cohen for system repair as well
+  const expertProfiles = getExpertProfiles();
+  const systemRepairExpert = expertProfiles[0]; // David Cohen
+
   return (
     <>
-      <SEO {...seoData} />
+      <SEOHead
+        title="תיקון מערכות מחשב מרחוק | אבחון ותיקון מקצועי"
+        description="אבחון ותיקון מקצועי של כל תקלות המחשב. עדכון מערכות הפעלה, ניקוי וירוסים ושיפור ביצועים."
+        keywords={["תיקון מחשב", "אבחון תקלות", "עדכון מערכת הפעלה", "ניקוי וירוסים", "אופטימיזציה"]}
+        canonicalUrl="https://recoverysite.netlify.app/services/system-repair"
+        ogType="service"
+      />
+      <ServiceSchema serviceType="system-repair" />
+      <PersonSchema person={systemRepairExpert} />
       
       <div className="min-h-screen bg-background">
         <Header />
@@ -113,6 +133,16 @@ const SystemRepairPage = () => {
                 <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
                   תיקון מערכות מחשב
                 </h1>
+                
+                {/* TL;DR Box */}
+                <div className="mb-8">
+                  <TLDRBox 
+                    points={getTLDRContent('system-repair')}
+                    variant="highlighted"
+                    className="max-w-3xl mx-auto"
+                  />
+                </div>
+                
                 <p className="text-xl text-gray-600 mb-8 leading-relaxed">
                   אבחון ותיקון מקצועי של כל תקלות המחשב. מעדכנים מערכות הפעלה, מנקים וירוסים ומשפרים ביצועים.
                 </p>
@@ -298,8 +328,50 @@ const SystemRepairPage = () => {
             </div>
           </section>
 
-          {/* CTA */}
+          {/* Expert Profile */}
+          <section className="py-20 bg-gray-50">
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  המומחה שלנו
+                </h2>
+                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                  הכר את המומחה שיטפל בתיקון המערכת שלך
+                </p>
+              </div>
+              
+              <ExpertProfile
+                name={systemRepairExpert.name}
+                title="מומחה תיקון מערכות ושחזור קבצים"
+                experience="מעל 10 שנות ניסיון בתחום תיקון מערכות מחשב ושחזור קבצים"
+                certifications={[
+                  "הסמכה בתיקון מערכות מתקדם",
+                  "מומחה במערכות הפעלה Windows, macOS ו-Linux",
+                  "הסמכת אבטחת מידע ופתרון בעיות מערכת",
+                  "הכשרה בכלי אבחון ותיקון מקצועיים"
+                ]}
+                linkedinUrl={systemRepairExpert.sameAs?.[0]}
+                bio={systemRepairExpert.description}
+                specialties={systemRepairExpert.knowsAbout}
+                education={systemRepairExpert.alumniOf}
+                yearsOfExperience={10}
+              />
+            </div>
+          </section>
+
+          {/* FAQ Section */}
           <section className="py-20">
+            <div className="container mx-auto px-4">
+              <FAQSection
+                items={getServiceFAQs('system-repair')}
+                title="שאלות נפוצות על תיקון מערכות"
+                structured={true}
+              />
+            </div>
+          </section>
+
+          {/* CTA */}
+          <section className="py-20 bg-purple-50">
             <div className="container mx-auto px-4">
               <div className="max-w-2xl mx-auto text-center">
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">

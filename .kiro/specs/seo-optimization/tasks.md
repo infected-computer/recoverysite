@@ -70,7 +70,8 @@
     - Add expertise areas and professional background
     - _Requirements: 4.3_
 
-  - [ ] 4.3 Add expert profiles to service pages
+  - [x] 4.3 Add expert profiles to service pages
+
     - Integrate expert profile components into data recovery, remote support, and system repair pages
     - Ensure proper authorship attribution on relevant content
 
@@ -83,6 +84,7 @@
     - Generate FAQPage JSON-LD schema automatically
     - Add support for categorized and service-specific FAQs
     - _Requirements: 5.1, 5.2_
+
 
   - [ ] 5.2 Add service-specific FAQ content
     - Create 3-5 FAQ items for data recovery service page
@@ -100,6 +102,8 @@
     - _Requirements: 6.1, 6.2_
 
   - [ ] 6.2 Add TL;DR summaries to main pages
+
+
     - Add TL;DR boxes to homepage, service pages, and key content pages
     - Create 3-5 key points for each page summarizing main benefits
     - Ensure summaries are optimized for AI parsing and voice search

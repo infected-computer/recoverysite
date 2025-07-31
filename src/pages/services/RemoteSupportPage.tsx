@@ -14,6 +14,14 @@ import { Headphones } from 'lucide-react';
 import { Settings } from 'lucide-react';
 import { Zap } from 'lucide-react';
 
+// Import new SEO components
+import { SEOHead } from "../../components/seo/SEOHead";
+import { ServiceSchema } from "../../components/seo/ServiceSchema";
+import { TLDRBox, getTLDRContent } from "../../components/seo/TLDRBox";
+import { FAQSection, getServiceFAQs } from "../../components/seo/FAQSection";
+import { ExpertProfile } from "../../components/seo/ExpertProfile";
+import { PersonSchema, getExpertProfiles } from "../../components/seo/PersonSchema";
+
 const RemoteSupportPage = () => {
   const seoData = {
     title: "תמיכה מרחוק 24/6 - דוקטור פיקס",
@@ -90,9 +98,21 @@ const RemoteSupportPage = () => {
     "גיבוי וארגון קבצים"
   ];
 
+  // Get expert data
+  const expertProfiles = getExpertProfiles();
+  const remoteSupportExpert = expertProfiles[1]; // Sarah Levy
+
   return (
     <>
-      <SEO {...seoData} />
+      <SEOHead
+        title="תמיכה טכנית מרחוק 24/6 | שירות מקצועי ומהיר"
+        description="שירות תמיכה טכנית מקצועי מרחוק בכל שעות היממה. פתרון בעיות מחשב, התקנת תוכנות ותחזוקה שוטפת."
+        keywords={["תמיכה מרחוק", "תמיכה טכנית", "פתרון בעיות מחשב", "התקנת תוכנות", "תחזוקת מחשב"]}
+        canonicalUrl="https://recoverysite.netlify.app/services/remote-support"
+        ogType="service"
+      />
+      <ServiceSchema serviceType="remote-support" />
+      <PersonSchema person={remoteSupportExpert} />
       
       <div className="min-h-screen bg-background">
         <Header />
@@ -105,6 +125,16 @@ const RemoteSupportPage = () => {
                 <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
                   תמיכה מרחוק 24/6
                 </h1>
+                
+                {/* TL;DR Box */}
+                <div className="mb-8">
+                  <TLDRBox 
+                    points={getTLDRContent('remote-support')}
+                    variant="highlighted"
+                    className="max-w-3xl mx-auto"
+                  />
+                </div>
+                
                 <p className="text-xl text-gray-600 mb-8 leading-relaxed">
                   שירות תמיכה טכנית מקצועי מרחוק בכל שעות היממה. פותרים כל בעיה טכנית מהבית שלך, ללא צורך בהגעה פיזית.
                 </p>
@@ -264,6 +294,48 @@ const RemoteSupportPage = () => {
                   </div>
                 </div>
               </div>
+            </div>
+          </section>
+
+          {/* Expert Profile */}
+          <section className="py-20 bg-gray-50">
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  המומחית שלנו
+                </h2>
+                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                  הכירי את המומחית שתספק לך תמיכה טכנית מקצועית
+                </p>
+              </div>
+              
+              <ExpertProfile
+                name={remoteSupportExpert.name}
+                title={remoteSupportExpert.jobTitle}
+                experience="מעל 7 שנות ניסיון בתחום התמיכה הטכנית ופתרון בעיות מחשב"
+                certifications={[
+                  "הסמכה בתמיכה טכנית מתקדמת",
+                  "מומחית במערכות הפעלה Windows ו-macOS",
+                  "הסמכת אבטחת מידע ופתרון בעיות רשת",
+                  "הכשרה בכלי תמיכה מרחוק מקצועיים"
+                ]}
+                linkedinUrl={remoteSupportExpert.sameAs?.[0]}
+                bio={remoteSupportExpert.description}
+                specialties={remoteSupportExpert.knowsAbout}
+                education={remoteSupportExpert.alumniOf}
+                yearsOfExperience={7}
+              />
+            </div>
+          </section>
+
+          {/* FAQ Section */}
+          <section className="py-20">
+            <div className="container mx-auto px-4">
+              <FAQSection
+                items={getServiceFAQs('remote-support')}
+                title="שאלות נפוצות על תמיכה מרחוק"
+                structured={true}
+              />
             </div>
           </section>
 
