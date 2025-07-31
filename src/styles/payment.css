@@ -1,0 +1,250 @@
+/* Payment System Styles */
+
+.hidden-payment-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem 0;
+}
+
+.hidden-payment-page .container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.payment-wrapper {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.payment-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+.payment-header h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.payment-header p {
+  opacity: 0.9;
+  font-size: 1rem;
+}
+
+.payment-form {
+  padding: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-group input.error,
+.form-group select.error {
+  border-color: #ef4444;
+}
+
+.form-group .error-message {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.form-group .help-text {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Amount input styling */
+.amount-input-wrapper {
+  position: relative;
+}
+
+.amount-input-wrapper .currency-symbol {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.amount-input-wrapper input {
+  padding-left: 2rem;
+  padding-right: 4rem;
+}
+
+.amount-input-wrapper .currency-select {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+/* Submit button */
+.submit-button {
+  width: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.submit-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.submit-button .loading-spinner {
+  margin-right: 0.5rem;
+}
+
+/* Security notice */
+.security-notice {
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.security-notice svg {
+  margin-right: 0.25rem;
+}
+
+/* Loading states */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+/* Error states */
+.error-message {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.error-message .error-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* Success states */
+.success-message {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.success-message .success-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  .hidden-payment-page {
+    padding: 1rem 0;
+  }
+  
+  .payment-header {
+    padding: 1.5rem;
+  }
+  
+  .payment-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .payment-form {
+    padding: 1.5rem;
+  }
+}
+
+/* Animation for form validation */
+.form-group.error input {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Focus states for accessibility */
+.form-group input:focus,
+.form-group select:focus,
+.submit-button:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}

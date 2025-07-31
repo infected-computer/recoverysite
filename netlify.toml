@@ -1,0 +1,53 @@
+[build]
+  command = "npm install --include=dev && npm run build"
+  functions = "netlify/functions"
+  publish = "dist"
+  
+[build.environment]
+  NODE_VERSION = "18"
+
+# Serverless function rewrite
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# Single Page Application redirect (must be last)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Function configuration
+[functions]
+  node_bundler = "esbuild"
+
+# Environment variables (will be overridden by actual env vars in Netlify dashboard)
+[context.production.environment]
+  NODE_ENV = "production"
+  RESEND_API_KEY = "${RESEND_API_KEY}"
+
+[context.deploy-preview.environment]
+  NODE_ENV = "development"
+
+# Headers for security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Headers = "Content-Type"
+    Access-Control-Allow-Methods = "POST, OPTIONS"
+
+# Headers for serverless functions
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    Cache-Control = "no-cache"

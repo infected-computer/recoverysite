@@ -1,0 +1,385 @@
+/* User Feedback Styles */
+
+.user-feedback {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  max-width: 400px;
+  min-width: 300px;
+  z-index: 1000;
+  border-radius: 8px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.feedback-content {
+  display: flex;
+  align-items: flex-start;
+  padding: 1rem;
+  gap: 0.75rem;
+}
+
+/* Loading State */
+.user-feedback.loading {
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  color: #1e40af;
+}
+
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #e5e7eb;
+  border-top: 2px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Retrying State */
+.user-feedback.retrying {
+  background: #fef3c7;
+  border: 1px solid #f59e0b;
+  color: #92400e;
+}
+
+.retry-icon {
+  color: #f59e0b;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Error States */
+.user-feedback.error {
+  border-left: 4px solid;
+}
+
+.user-feedback.error.low {
+  background: #f0f9ff;
+  border-color: #0ea5e9;
+  color: #0c4a6e;
+}
+
+.user-feedback.error.medium {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #92400e;
+}
+
+.user-feedback.error.high {
+  background: #fee2e2;
+  border-color: #ef4444;
+  color: #991b1b;
+}
+
+.user-feedback.error.critical {
+  background: #fef2f2;
+  border-color: #dc2626;
+  color: #7f1d1d;
+  box-shadow: 0 20px 25px -5px rgba(220, 38, 38, 0.1), 0 10px 10px -5px rgba(220, 38, 38, 0.04);
+}
+
+/* Error Icons */
+.error-icon {
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.user-feedback.error.low .error-icon {
+  color: #0ea5e9;
+}
+
+.user-feedback.error.medium .error-icon {
+  color: #f59e0b;
+}
+
+.user-feedback.error.high .error-icon {
+  color: #ef4444;
+}
+
+.user-feedback.error.critical .error-icon {
+  color: #dc2626;
+}
+
+/* Feedback Message */
+.feedback-message {
+  flex: 1;
+  min-width: 0;
+}
+
+.feedback-message p {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.error-title {
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem !important;
+}
+
+.error-description {
+  font-size: 0.875rem;
+}
+
+.error-code {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  font-family: monospace;
+  margin-top: 0.25rem !important;
+}
+
+.retry-info {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  margin-top: 0.25rem !important;
+}
+
+/* Feedback Actions */
+.feedback-actions {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.btn {
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-retry {
+  background: rgba(59, 130, 246, 0.1);
+  color: #1e40af;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.btn-retry:hover:not(:disabled) {
+  background: rgba(59, 130, 246, 0.2);
+}
+
+.btn-dismiss {
+  background: rgba(107, 114, 128, 0.1);
+  color: #6b7280;
+  border: 1px solid rgba(107, 114, 128, 0.2);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.btn-dismiss:hover {
+  background: rgba(107, 114, 128, 0.2);
+  color: #374151;
+}
+
+/* Retry Countdown */
+.retry-countdown {
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.05);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.retry-countdown p {
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* Progress Bar for Loading */
+.user-feedback.loading::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: #3b82f6;
+  animation: progress 2s ease-in-out infinite;
+}
+
+@keyframes progress {
+  0% {
+    width: 0%;
+  }
+  50% {
+    width: 70%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+  .user-feedback {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+    min-width: auto;
+  }
+
+  .feedback-content {
+    padding: 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .feedback-message {
+    font-size: 0.875rem;
+  }
+
+  .error-title {
+    font-size: 0.8125rem;
+  }
+
+  .error-description {
+    font-size: 0.8125rem;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .user-feedback {
+    border-width: 2px;
+  }
+
+  .user-feedback.error.low {
+    background: #ffffff;
+    border-color: #0ea5e9;
+    color: #0c4a6e;
+  }
+
+  .user-feedback.error.medium {
+    background: #ffffff;
+    border-color: #f59e0b;
+    color: #92400e;
+  }
+
+  .user-feedback.error.high {
+    background: #ffffff;
+    border-color: #ef4444;
+    color: #991b1b;
+  }
+
+  .user-feedback.error.critical {
+    background: #ffffff;
+    border-color: #dc2626;
+    color: #7f1d1d;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .user-feedback {
+    animation: none;
+  }
+
+  .spinner {
+    animation: none;
+  }
+
+  .animate-spin {
+    animation: none;
+  }
+
+  .user-feedback.loading::after {
+    animation: none;
+  }
+}
+
+/* Focus Management */
+.user-feedback:focus-within {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.btn:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 1px;
+}
+
+/* Toast Stack */
+.user-feedback + .user-feedback {
+  top: calc(20px + 80px); /* Stack multiple feedbacks */
+}
+
+.user-feedback + .user-feedback + .user-feedback {
+  top: calc(20px + 160px);
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .user-feedback.loading {
+    background: #1e3a8a;
+    border-color: #3b82f6;
+    color: #dbeafe;
+  }
+
+  .user-feedback.retrying {
+    background: #92400e;
+    border-color: #f59e0b;
+    color: #fef3c7;
+  }
+
+  .user-feedback.error.low {
+    background: #0c4a6e;
+    border-color: #0ea5e9;
+    color: #e0f2fe;
+  }
+
+  .user-feedback.error.medium {
+    background: #92400e;
+    border-color: #f59e0b;
+    color: #fef3c7;
+  }
+
+  .user-feedback.error.high {
+    background: #991b1b;
+    border-color: #ef4444;
+    color: #fee2e2;
+  }
+
+  .user-feedback.error.critical {
+    background: #7f1d1d;
+    border-color: #dc2626;
+    color: #fef2f2;
+  }
+}

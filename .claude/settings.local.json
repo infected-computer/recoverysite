@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run build:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run lint)",
+      "Bash(npx update-browserslist-db:*)",
+      "Bash(npm update:*)",
+      "Bash(rm:*)",
+      "Bash(npm audit:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(npm ls:*)",
+      "Bash(netlify deploy:*)",
+      "Bash(netlify env:list:*)",
+      "Bash(mkdir:*)"
+    ],
+    "deny": []
+  }
+}
