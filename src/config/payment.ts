@@ -20,7 +20,7 @@ export const PAYMENT_CONFIG = {
   VALIDATION: {
     MIN_AMOUNT: 1,
     MAX_AMOUNT: 10000,
-    SUPPORTED_CURRENCIES: ['ILS', 'USD', 'EUR'] as const,
+    SUPPORTED_CURRENCIES: ['ILS'] as const,
     AMOUNT_DECIMAL_PLACES: 2,
   },
 

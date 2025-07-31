@@ -9,6 +9,7 @@ import { useSEO, useBreadcrumbs } from "../hooks/useSEO";
 // Import new redesigned components
 import { HomePageHero } from "../components/sections/HeroSlider";
 import Services from "../components/sections/Services";
+import PricingSummary from "../components/sections/PricingSummary";
 import About from "../components/sections/About";
 import Testimonials from "../components/sections/Testimonials";
 import FAQSummary from "../components/sections/FAQSummary";
@@ -189,6 +190,9 @@ const Index = () => {
               services={services}
             />
           </div>
+
+          {/* Pricing Summary Section */}
+          <PricingSummary />
 
           {/* About Section */}
           <About

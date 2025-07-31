@@ -198,13 +198,11 @@ const PaymentForm: React.FC<Partial<PaymentFormProps>> = ({
         {/* Amount Input */}
         <div className="form-group">
           <label htmlFor="amount" className="block text-sm font-medium text-gray-700 mb-2">
-            Payment Amount *
+            סכום לתשלום (בשקלים) *
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <span className="text-gray-500 sm:text-sm">
-                {formData.currency === 'ILS' ? '₪' : formData.currency === 'USD' ? '$' : '€'}
-              </span>
+              <span className="text-gray-500 sm:text-sm">₪</span>
             </div>
             <input
               type="number"
@@ -215,27 +213,13 @@ const PaymentForm: React.FC<Partial<PaymentFormProps>> = ({
               step="0.01"
               value={formData.amount || ''}
               onChange={(e) => handleInputChange('amount', e.target.value)}
-              className={`block w-full pl-7 pr-12 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+              className={`block w-full pl-7 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                 getFieldError('amount') ? 'border-red-300' : 'border-gray-300'
               }`}
               placeholder="0.00"
               disabled={showProcessing}
               required
             />
-            <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
-              <select
-                value={formData.currency}
-                onChange={(e) => handleInputChange('currency', e.target.value)}
-                className="border-0 bg-transparent text-gray-500 focus:ring-0 focus:border-0"
-                disabled={showProcessing}
-              >
-                {PAYMENT_CONFIG.VALIDATION.SUPPORTED_CURRENCIES.map(currency => (
-                  <option key={currency} value={currency}>
-                    {currency}
-                  </option>
-                ))}
-              </select>
-            </div>
           </div>
           {getFieldError('amount') && (
             <p className="mt-1 text-sm text-red-600">{getFieldError('amount')}</p>
@@ -250,7 +234,7 @@ const PaymentForm: React.FC<Partial<PaymentFormProps>> = ({
         {/* Customer Email */}
         <div className="form-group">
           <label htmlFor="customerEmail" className="block text-sm font-medium text-gray-700 mb-2">
-            Email Address (Optional)
+            כתובת אימייל (אופציונלי)
           </label>
           <input
             type="email"
@@ -272,7 +256,7 @@ const PaymentForm: React.FC<Partial<PaymentFormProps>> = ({
         {/* Customer Name */}
         <div className="form-group">
           <label htmlFor="customerName" className="block text-sm font-medium text-gray-700 mb-2">
-            Full Name (Optional)
+            שם מלא (אופציונלי)
           </label>
           <input
             type="text"
@@ -325,11 +309,11 @@ const PaymentForm: React.FC<Partial<PaymentFormProps>> = ({
             {showProcessing ? (
               <>
                 <LoadingSpinner size="small" />
-                <span className="ml-2">Processing...</span>
+                <span className="ml-2">מעבד תשלום...</span>
               </>
             ) : (
               <>
-                Proceed to Payment
+                המשך לתשלום
                 {formData.amount > 0 && (
                   <span className="ml-2">
                     ({formatAmount(formData.amount, formData.currency)})
@@ -346,7 +330,7 @@ const PaymentForm: React.FC<Partial<PaymentFormProps>> = ({
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
             </svg>
-            <span>Secure payment powered by Lemon Squeezy</span>
+            <span>תשלום מאובטח באמצעות Lemon Squeezy</span>
           </div>
         </div>
       </form>

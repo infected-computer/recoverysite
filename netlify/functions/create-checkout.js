@@ -32,7 +32,13 @@ exports.handler = async (event, context) => {
   }
 
   // Check for required environment variables
-  const { LEMON_SQUEEZY_API_KEY, LEMON_SQUEEZY_STORE_ID } = process.env;
+  const { 
+    LEMON_SQUEEZY_API_KEY, 
+    LEMON_SQUEEZY_STORE_ID,
+    LEMON_SQUEEZY_PRODUCT_ID, 
+    LEMON_SQUEEZY_VARIANT_ID 
+  } = process.env;
+  
   if (!LEMON_SQUEEZY_API_KEY || !LEMON_SQUEEZY_STORE_ID) {
     console.error('Missing Lemon Squeezy API key or Store ID');
     return {
@@ -43,7 +49,7 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const { price, name, description } = JSON.parse(event.body);
+    const { price, name, description, currency = 'ILS' } = JSON.parse(event.body);
 
     // Basic validation
     if (typeof price !== 'number' || price <= 0 || !name) {
@@ -54,33 +60,100 @@ exports.handler = async (event, context) => {
       };
     }
 
-    const checkoutData = {
-      data: {
-        type: 'checkouts',
-        attributes: {
-          checkout_data: {
-            custom: {
-              description: description || name, // Use description or name
+    // Validate currency - only ILS supported
+    if (currency !== 'ILS') {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ error: 'Only ILS currency is supported.' })
+      };
+    }
+
+    // Build checkout data - support both fixed product and dynamic pricing
+    let checkoutData;
+    
+    if (LEMON_SQUEEZY_PRODUCT_ID && LEMON_SQUEEZY_VARIANT_ID) {
+      // Use fixed product/variant (recommended for production)
+      checkoutData = {
+        data: {
+          type: 'checkouts',
+          attributes: {
+            checkout_data: {
+              custom: {
+                amount: price * 100, // Custom amount in cents
+                description: description || name,
+                currency: currency,
+              },
+            },
+            checkout_options: {
+              embed: false,
+              media: false,
+              logo: false,
+              desc: false,
+              discount: false,
+              dark: false,
+              subscription_preview: false,
+              button_color: '#0E73FF',
             },
           },
-          product_options: {
-            name: name,
-            description: description || `Payment for ${name}`,
-            receipt_button_text: 'Return to Site',
-            receipt_link_url: process.env.REDIRECT_URL_SUCCESS || 'https://recoverysite.netlify.app',
-          },
-          custom_price: price * 100, // Convert to cents
-        },
-        relationships: {
-          store: {
-            data: {
-              type: 'stores',
-              id: LEMON_SQUEEZY_STORE_ID,
+          relationships: {
+            store: {
+              data: {
+                type: 'stores',
+                id: LEMON_SQUEEZY_STORE_ID,
+              },
+            },
+            variant: {
+              data: {
+                type: 'variants',
+                id: LEMON_SQUEEZY_VARIANT_ID,
+              },
             },
           },
         },
-      },
-    };
+      };
+    } else {
+      // Use dynamic product creation (for testing/development)
+      checkoutData = {
+        data: {
+          type: 'checkouts',
+          attributes: {
+            checkout_data: {
+              custom: {
+                description: description || name,
+                currency: currency,
+              },
+            },
+            product_options: {
+              name: name,
+              description: description || `תשלום עבור ${name}`,
+              receipt_button_text: 'חזור לאתר',
+              receipt_link_url: process.env.REDIRECT_URL_SUCCESS || 'https://recoverysite.netlify.app/payment-success',
+              redirect_url: process.env.REDIRECT_URL_SUCCESS || 'https://recoverysite.netlify.app/payment-success',
+            },
+            checkout_options: {
+              embed: false,
+              media: false,
+              logo: false,
+              desc: false,
+              discount: false,
+              dark: false,
+              subscription_preview: false,
+              button_color: '#0E73FF',
+            },
+            custom_price: price * 100, // Convert to cents
+          },
+          relationships: {
+            store: {
+              data: {
+                type: 'stores',
+                id: LEMON_SQUEEZY_STORE_ID,
+              },
+            },
+          },
+        },
+      };
+    }
 
     const response = await fetch('https://api.lemonsqueezy.com/v1/checkouts', {
       method: 'POST',

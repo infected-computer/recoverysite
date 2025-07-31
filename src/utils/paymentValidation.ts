@@ -6,34 +6,34 @@ import { PaymentFormData, ValidationError } from '../types/payment';
 export const paymentFormSchema = z.object({
   amount: z
     .number()
-    .min(PAYMENT_CONFIG.VALIDATION.MIN_AMOUNT, `Amount must be at least $${PAYMENT_CONFIG.VALIDATION.MIN_AMOUNT}`)
-    .max(PAYMENT_CONFIG.VALIDATION.MAX_AMOUNT, `Amount cannot exceed $${PAYMENT_CONFIG.VALIDATION.MAX_AMOUNT}`)
+    .min(PAYMENT_CONFIG.VALIDATION.MIN_AMOUNT, `הסכום חייב להיות לפחות ₪${PAYMENT_CONFIG.VALIDATION.MIN_AMOUNT}`)
+    .max(PAYMENT_CONFIG.VALIDATION.MAX_AMOUNT, `הסכום לא יכול לעלות על ₪${PAYMENT_CONFIG.VALIDATION.MAX_AMOUNT}`)
     .refine(
       (val) => Number.isFinite(val) && val > 0,
-      'Amount must be a valid positive number'
+      'הסכום חייב להיות מספר חיובי תקין'
     )
     .refine(
       (val) => {
         const decimalPlaces = (val.toString().split('.')[1] || '').length;
         return decimalPlaces <= PAYMENT_CONFIG.VALIDATION.AMOUNT_DECIMAL_PLACES;
       },
-      `Amount can have at most ${PAYMENT_CONFIG.VALIDATION.AMOUNT_DECIMAL_PLACES} decimal places`
+      `הסכום יכול להכיל לכל היותר ${PAYMENT_CONFIG.VALIDATION.AMOUNT_DECIMAL_PLACES} ספרות אחרי הנקודה`
     ),
   
   currency: z.enum(PAYMENT_CONFIG.VALIDATION.SUPPORTED_CURRENCIES, {
-    errorMap: () => ({ message: 'Please select a valid currency' })
+    errorMap: () => ({ message: 'מטבע חייב להיות שקלים' })
   }),
   
   customerEmail: z
     .string()
-    .email('Please enter a valid email address')
+    .email('אנא הזן כתובת אימייל תקינה')
     .optional()
     .or(z.literal('')),
   
   customerName: z
     .string()
-    .min(2, 'Name must be at least 2 characters')
-    .max(100, 'Name cannot exceed 100 characters')
+    .min(2, 'השם חייב להכיל לפחות 2 תווים')
+    .max(100, 'השם לא יכול להכיל יותר מ-100 תווים')
     .optional()
     .or(z.literal('')),
 });
@@ -85,7 +85,10 @@ export const validateAccessToken = (token: string): boolean => {
 
 // Format amount for display
 export const formatAmount = (amount: number, currency: string): string => {
-  return new Intl.NumberFormat('en-US', {
+  // Use appropriate locale for currency formatting
+  const locale = currency === 'ILS' ? 'he-IL' : 'en-US';
+  
+  return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency: currency,
     minimumFractionDigits: 2,

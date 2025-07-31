@@ -132,7 +132,7 @@ class LemonSqueezyService {
       return false;
     }
 
-    if (!data.currency || !['ILS', 'USD', 'EUR'].includes(data.currency)) {
+    if (!data.currency || data.currency !== 'ILS') {
       return false;
     }
 

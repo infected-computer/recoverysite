@@ -2,7 +2,7 @@
 
 export interface PaymentFormData {
   amount: number;
-  currency: 'ILS' | 'USD' | 'EUR';
+  currency: 'ILS';
   customerEmail?: string;
   customerName?: string;
 }

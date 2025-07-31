@@ -26,7 +26,7 @@ describe('LemonSqueezyService', () => {
 
       const paymentData: PaymentFormData = {
         amount: 100,
-        currency: 'USD',
+        currency: 'ILS',
         customerEmail: 'test@example.com',
         customerName: 'John Doe'
       };
@@ -47,7 +47,7 @@ describe('LemonSqueezyService', () => {
 
       const paymentData: PaymentFormData = {
         amount: 100,
-        currency: 'USD',
+        currency: 'ILS',
         customerEmail: 'test@example.com',
         customerName: 'John Doe'
       };
@@ -61,7 +61,7 @@ describe('LemonSqueezyService', () => {
 
       const paymentData: PaymentFormData = {
         amount: 100,
-        currency: 'USD',
+        currency: 'ILS',
         customerEmail: 'test@example.com',
         customerName: 'John Doe'
       };
@@ -92,7 +92,7 @@ describe('LemonSqueezyService', () => {
 
       const paymentData: PaymentFormData = {
         amount: 100,
-        currency: 'USD',
+        currency: 'ILS',
         customerEmail: 'test@example.com',
         customerName: 'John Doe'
       };
@@ -105,7 +105,7 @@ describe('LemonSqueezyService', () => {
     it('should validate payment data', async () => {
       const invalidPaymentData: PaymentFormData = {
         amount: 0,
-        currency: 'USD',
+        currency: 'ILS',
         customerEmail: 'invalid-email',
         customerName: 'John Doe'
       };
@@ -120,7 +120,7 @@ describe('LemonSqueezyService', () => {
     it('should validate correct payment data', () => {
       const validData: PaymentFormData = {
         amount: 100,
-        currency: 'USD',
+        currency: 'ILS',
         customerEmail: 'test@example.com',
         customerName: 'John Doe'
       };
@@ -133,7 +133,7 @@ describe('LemonSqueezyService', () => {
     it('should reject invalid amounts', () => {
       const invalidData: PaymentFormData = {
         amount: 0,
-        currency: 'USD',
+        currency: 'ILS',
         customerEmail: 'test@example.com',
         customerName: 'John Doe'
       };

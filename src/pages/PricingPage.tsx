@@ -327,14 +327,25 @@ export const PricingPage = () => {
               </div>
             </div>
 
-            <Button 
-              onClick={() => window.location.href = '/contact'}
-              size="lg"
-              className="mt-8 bg-accent hover:bg-accent/90 text-accent-foreground font-hebrew touch-target"
-              aria-label="התחל עכשיו עם בדיקה חינמית"
-            >
-              התחל עכשיו - בדיקה חינמית
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4 mt-8">
+              <Button 
+                onClick={() => window.location.href = '/contact'}
+                size="lg"
+                className="bg-accent hover:bg-accent/90 text-accent-foreground font-hebrew touch-target"
+                aria-label="התחל עכשיו עם בדיקה חינמית"
+              >
+                התחל עכשיו - בדיקה חינמית
+              </Button>
+              <Button 
+                onClick={() => window.location.href = '/secure-payment'}
+                size="lg"
+                variant="outline"
+                className="font-hebrew touch-target"
+                aria-label="בצע תשלום מיידי"
+              >
+                תשלום מיידי →
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>

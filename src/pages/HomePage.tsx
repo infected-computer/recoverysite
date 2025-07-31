@@ -303,18 +303,25 @@ export const HomePage: React.FC = () => {
             </div>
 
             <div className="pricing-cta">
-              <p><strong>רוצים לדעת בדיוק כמה זה יעלה?</strong></p>
-              <p>קבלו הערכת מחיר מדויקת תוך 30 דקות</p>
+              <p><strong>רוצים לשלם ולהתחיל את התהליך?</strong></p>
+              <p>בצעו תשלום מאובטח ומיידי עכשיו</p>
               <div className="cta-buttons">
                 <a href="tel:+972501234567" className="btn-primary">
                   התקשרו לקבלת הצעת מחיר
                 </a>
                 <a 
-                  href="/article/12" 
+                  href="/secure-payment" 
                   className="btn-secondary"
+                  aria-label="לחצו לביצוע תשלום מאובטח"
+                >
+                  תשלום מיידי →
+                </a>
+                <a 
+                  href="/article/12" 
+                  className="btn-tertiary"
                   aria-label="לחצו לקריאת מחירון מפורט בבלוג"
                 >
-                  מחירון מפורט בבלוג →
+                  מחירון מפורט
                 </a>
               </div>
             </div>
