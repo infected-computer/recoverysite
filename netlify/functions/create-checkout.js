@@ -1,10 +1,10 @@
 
 // Netlify serverless function for creating a Lemon Squeezy checkout URL
 
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 // Main handler function
-exports.handler = async (event, context) => {
+export const handler = async (event, context) => {
   // Set CORS headers
   const headers = {
     'Access-Control-Allow-Origin': '*', // Adjust for production

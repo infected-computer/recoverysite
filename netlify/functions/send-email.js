@@ -1,7 +1,7 @@
 // Netlify serverless function for sending emails via Resend
 // This function handles contact form submissions securely on the backend
 
-const { Resend } = require('resend');
+import { Resend } from 'resend';
 
 // Initialize Resend with API key from environment variables
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -273,7 +273,7 @@ const validateMessage = (message) => {
 };
 
 // Main handler function
-exports.handler = async (event, context) => {
+export const handler = async (event, context) => {
   console.log(`[send-email] Received ${event.httpMethod} request from ${event.headers.origin || 'unknown origin'}`);
 
   // Set CORS headers

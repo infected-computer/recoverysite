@@ -1,10 +1,10 @@
 
 // Netlify serverless function for handling Lemon Squeezy webhooks
 
-const crypto = require('crypto');
+import crypto from 'crypto';
 
 // Main handler function
-exports.handler = async (event, context) => {
+export const handler = async (event, context) => {
   // Immediately return a 200 OK response to Lemon Squeezy
   // This is important to prevent timeouts and retries.
   const response = {
