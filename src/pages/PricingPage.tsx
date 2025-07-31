@@ -87,6 +87,11 @@ export const PricingPage = () => {
   
   useSEO(seoData);
 
+  const openWhatsApp = () => {
+    const message = encodeURIComponent("שלום, אני מעוניין במידע נוסף על מחירון שחזור הקבצים שלכם");
+    window.open(`https://wa.me/972536657279?text=${message}`, '_blank');
+  };
+
   const handlePayment = async (price: number, name: string, description: string) => {
     try {
       const response = await fetch('/.netlify/functions/create-checkout', {
@@ -335,15 +340,6 @@ export const PricingPage = () => {
                 aria-label="התחל עכשיו עם בדיקה חינמית"
               >
                 התחל עכשיו - בדיקה חינמית
-              </Button>
-              <Button 
-                onClick={() => window.location.href = '/secure-payment'}
-                size="lg"
-                variant="outline"
-                className="font-hebrew touch-target"
-                aria-label="בצע תשלום מיידי"
-              >
-                תשלום מיידי →
               </Button>
             </div>
           </CardContent>

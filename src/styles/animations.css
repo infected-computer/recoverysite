@@ -292,29 +292,6 @@
   100% { transform: rotate(360deg); }
 }
 
-/* אנימציות מעבר דפים */
-.page-transition-enter {
-  opacity: 0;
-  transform: translateY(20px) scale(0.98);
-}
-
-.page-transition-enter-active {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.page-transition-exit {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-.page-transition-exit-active {
-  opacity: 0;
-  transform: translateY(-20px) scale(1.02);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
 /* אנימציות רספונסיביות */
 @media (prefers-reduced-motion: reduce) {
   *,

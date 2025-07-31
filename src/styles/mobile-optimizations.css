@@ -8,75 +8,7 @@
     font-size: 18px !important;
   }
   
-  /* Reduce animations on mobile for better performance */
-  .reduce-motion {
-    animation-duration: 0.3s !important;
-    transition-duration: 0.3s !important;
-  }
-  
-  /* Larger touch targets */
-  .touch-target {
-    min-height: 44px;
-    min-width: 44px;
-  }
-  
-  /* Better spacing on mobile */
-  .mobile-spacing {
-    margin-bottom: 2rem !important;
-  }
-  
-  /* Simplified animations on mobile */
-  @media (prefers-reduced-motion: reduce) {
-    .animate-bounce,
-    .animate-pulse,
-    .animate-spin {
-      animation: none !important;
-    }
-    
-    .hover\:scale-105:hover {
-      transform: none !important;
-    }
-  }
-}
-
-/* Enhanced contrast for better accessibility */
-.high-contrast {
-  color: rgb(17, 24, 39) !important; /* gray-900 */
-}
-
-.high-contrast-bg {
-  background-color: rgb(249, 250, 251) !important; /* gray-50 */
-}
-
-/* Better focus indicators */
-.focus-enhanced:focus {
-  outline: 3px solid rgb(59, 130, 246) !important; /* blue-500 */
-  outline-offset: 2px !important;
-}
-
-/* Improved button states */
-.button-enhanced {
-  transition: all 0.2s ease-in-out;
-}
-
-.button-enhanced:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-}
-
-.button-enhanced:active {
-  transform: translateY(0);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* Dynamic counter animation */
-@keyframes countUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.counter-animation {
-  animation: countUp 0.5s ease-out;
+  /* Animations removed */
 }
 
 /* Success stories highlight */

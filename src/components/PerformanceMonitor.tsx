@@ -3,7 +3,6 @@ import { useWebVitals } from '../hooks/useWebVitals';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
-import SitemapManager from './SitemapManager';
 import { Activity } from 'lucide-react';
 import { Zap } from 'lucide-react';
 import { Eye } from 'lucide-react';
@@ -27,7 +26,6 @@ const PerformanceMonitor = ({ showDetails = false, onClose }: PerformanceMonitor
   });
 
   const [isVisible, setIsVisible] = useState(showDetails);
-  const [showSitemapManager, setShowSitemapManager] = useState(false);
 
   useEffect(() => {
     setIsVisible(showDetails);
@@ -209,15 +207,6 @@ const PerformanceMonitor = ({ showDetails = false, onClose }: PerformanceMonitor
               רענן
             </Button>
             <Button
-              onClick={() => setShowSitemapManager(true)}
-              size="sm"
-              variant="outline"
-              className="text-xs h-7"
-            >
-              <Globe className="h-3 w-3 mr-1" />
-              Sitemap
-            </Button>
-            <Button
               onClick={() => {
                 console.log('Web Vitals Metrics:', metrics);
                 console.log('Performance Score:', performanceScore);
@@ -233,10 +222,6 @@ const PerformanceMonitor = ({ showDetails = false, onClose }: PerformanceMonitor
         </CardContent>
       </Card>
       
-      <SitemapManager 
-        isOpen={showSitemapManager} 
-        onClose={() => setShowSitemapManager(false)} 
-      />
     </div>
   );
 };

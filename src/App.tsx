@@ -5,12 +5,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
 import { lazy, Suspense, useEffect } from 'react';
-import LoadingSpinner from './components/LoadingSpinner';
-import { AdvancedPageTransition } from './components/animations/SimplePageTransition';
-import { NavigationLoader } from './components/ui/NavigationLoader';
+import LoadingSpinner from './components/common/LoadingSpinner';
 import AccessibilityChecker from './components/accessibility/AccessibilityChecker';
 
-import { BundleAnalyzer, ResourcePreloader } from './utils/bundleAnalyzer';
 import { injectCriticalCSS } from './utils/layoutShiftPrevention';
 import GoogleAnalytics from './components/analytics/GoogleAnalytics';
 import { getAnalyticsConfig } from './config/analytics';
@@ -30,9 +27,7 @@ const AboutPage = lazy(() => import('./pages/AboutPage').then(module => ({ defau
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage').then(module => ({ default: module.PrivacyPage })));
 const TermsPage = lazy(() => import('./pages/TermsPage').then(module => ({ default: module.TermsPage })));
 const PaymentPage = lazy(() => import('./pages/PaymentPage'));
-const PaymentSuccessPage = lazy(() => import('./pages/PaymentSuccessPage'));
-const PaymentErrorPage = lazy(() => import('./pages/PaymentErrorPage'));
-const PaymentCancelPage = lazy(() => import('./pages/PaymentCancelPage'));
+
 const NotFound = lazy(() => import('./pages/NotFound'));
 const FAQPage = lazy(() => import('./pages/FAQPage'));
 
@@ -61,17 +56,19 @@ function App() {
     // Initialize font optimization
     fontLoader.initFontOptimization();
 
-    // Initialize bundle analyzer
-    if (import.meta.env.DEV) {
-      BundleAnalyzer.init();
-    }
-
-    // Preconnect to external domains
-    ResourcePreloader.preconnectDomains([
+    // Preconnect to external domains for better performance
+    const preconnectDomains = [
       'https://images.unsplash.com',
       'https://fonts.googleapis.com',
       'https://fonts.gstatic.com'
-    ]);
+    ];
+    
+    preconnectDomains.forEach(domain => {
+      const link = document.createElement('link');
+      link.rel = 'preconnect';
+      link.href = domain;
+      document.head.appendChild(link);
+    });
 
     // Preload critical routes after initial load
     const preloadTimer = setTimeout(() => {
@@ -82,7 +79,6 @@ function App() {
 
     return () => {
       clearTimeout(preloadTimer);
-      BundleAnalyzer.cleanup();
     };
   }, []);
 
@@ -103,35 +99,31 @@ function App() {
                 v7_relativeSplatPath: true
               }}
             >
-              <NavigationLoader />
               <Suspense fallback={<LoadingSpinner />}>
                 <Routes>
-                <Route path="/" element={<AdvancedPageTransition><Index /></AdvancedPageTransition>} />
-                <Route path="/pricing" element={<AdvancedPageTransition><PricingPage /></AdvancedPageTransition>} />
-                <Route path="/process" element={<AdvancedPageTransition><ProcessPage /></AdvancedPageTransition>} />
-                <Route path="/articles" element={<AdvancedPageTransition><ArticlesPage /></AdvancedPageTransition>} />
-                <Route path="/article/:id" element={<AdvancedPageTransition><ArticleDetailPage /></AdvancedPageTransition>} />
-                <Route path="/contact" element={<AdvancedPageTransition><ContactPage /></AdvancedPageTransition>} />
-                <Route path="/about" element={<AdvancedPageTransition><AboutPage /></AdvancedPageTransition>} />
-                <Route path="/privacy" element={<AdvancedPageTransition><PrivacyPage /></AdvancedPageTransition>} />
-                <Route path="/terms" element={<AdvancedPageTransition><TermsPage /></AdvancedPageTransition>} />
-                <Route path="/faq" element={<AdvancedPageTransition><FAQPage /></AdvancedPageTransition>} />
+                <Route path="/" element={<Index />} />
+                <Route path="/pricing" element={<PricingPage />} />
+                <Route path="/process" element={<ProcessPage />} />
+                <Route path="/articles" element={<ArticlesPage />} />
+                <Route path="/article/:id" element={<ArticleDetailPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/privacy" element={<PrivacyPage />} />
+                <Route path="/terms" element={<TermsPage />} />
+                <Route path="/faq" element={<FAQPage />} />
                 
                 {/* Payment system routes */}
-                <Route path="/secure-payment" element={<AdvancedPageTransition><PaymentPage /></AdvancedPageTransition>} />
-                <Route path="/payment-success" element={<AdvancedPageTransition><PaymentSuccessPage /></AdvancedPageTransition>} />
-                <Route path="/payment-error" element={<AdvancedPageTransition><PaymentErrorPage /></AdvancedPageTransition>} />
-                <Route path="/payment-cancel" element={<AdvancedPageTransition><PaymentCancelPage /></AdvancedPageTransition>} />
+                <Route path="/secure-payment" element={<PaymentPage />} />
                 
                 {/* Legacy payment route (redirect) */}
-                <Route path="/payment-secret" element={<AdvancedPageTransition><PaymentPage /></AdvancedPageTransition>} />
+                <Route path="/payment-secret" element={<PaymentPage />} />
                 
                 {/* Service pages */}
-                <Route path="/services/data-recovery" element={<AdvancedPageTransition><DataRecoveryPage /></AdvancedPageTransition>} />
-                <Route path="/services/remote-support" element={<AdvancedPageTransition><RemoteSupportPage /></AdvancedPageTransition>} />
-                <Route path="/services/system-repair" element={<AdvancedPageTransition><SystemRepairPage /></AdvancedPageTransition>} />
+                <Route path="/services/data-recovery" element={<DataRecoveryPage />} />
+                <Route path="/services/remote-support" element={<RemoteSupportPage />} />
+                <Route path="/services/system-repair" element={<SystemRepairPage />} />
                 
-                <Route path="*" element={<AdvancedPageTransition><NotFound /></AdvancedPageTransition>} />
+                <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>
             </BrowserRouter>

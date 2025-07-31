@@ -4,7 +4,6 @@ import { Header } from "../components/layout/Header";
 import { Footer } from "../components/layout/Footer";
 import PaymentForm from '../components/payment/PaymentForm';
 import '../styles/payment.css';
-import '../styles/paymentResults.css';
 
 const PaymentPage: React.FC = () => {
   return (

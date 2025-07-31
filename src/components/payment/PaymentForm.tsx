@@ -1,203 +1,82 @@
-import React, { useState, useEffect } from 'react';
-import { PaymentFormData, PaymentFormProps, ValidationError } from '../../types/payment';
-import { validatePaymentForm, formatAmount, sanitizeInput } from '../../utils/paymentValidation';
-import { useSecurity } from '../../hooks/useSecurity';
-import { useErrorHandler } from '../../hooks/useErrorHandler';
-import { PAYMENT_CONFIG, getPaymentConfig } from '../../config/payment';
+import React, { useState } from 'react';
 import { lemonSqueezyService } from '../../services/lemonSqueezyService';
-import { transactionLogger } from '../../services/transactionLogger';
-import { Transaction, TransactionStatus } from '../../types/payment';
-import LoadingSpinner from '../common/LoadingSpinner';
-import ErrorMessage from '../common/ErrorMessage';
-import UserFeedback from '../feedback/UserFeedback';
 
-const PaymentForm: React.FC<Partial<PaymentFormProps>> = ({ 
-  onSubmit,
-  isProcessing = false 
-}) => {
-  const [formData, setFormData] = useState<PaymentFormData>({
+interface SimplePaymentFormData {
+  amount: number;
+  customerEmail: string;
+  customerName: string;
+}
+
+const PaymentForm: React.FC = () => {
+  const [formData, setFormData] = useState<SimplePaymentFormData>({
     amount: 0,
-    currency: 'ILS',
     customerEmail: '',
     customerName: '',
   });
 
-  const [errors, setErrors] = useState<ValidationError[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  // Security hooks
-  const {
-    isBlocked,
-    remainingAttempts,
-    checkRateLimit,
-    sanitizeInput: securitySanitize,
-    validatePaymentAmount,
-    logSuspiciousActivity,
-    enforceHTTPS,
-  } = useSecurity({
-    identifier: 'payment_form',
-    maxAttempts: 5,
-    windowMs: 15 * 60 * 1000, // 15 minutes
-  });
-
-  // Error handling hooks
-  const {
-    currentError,
-    handleError,
-    clearError,
-    retry,
-    isRetrying,
-    retryCount,
-    isRetryable,
-    getUserMessage,
-  } = useErrorHandler({
-    context: 'payment_form',
-    maxRetries: 3,
-    onError: (error) => {
-      logSuspiciousActivity('payment_error', {
-        type: error.type,
-        severity: error.severity,
-        message: error.message,
-      });
-    },
-  });
-
-  // Enforce HTTPS on component mount
-  useEffect(() => {
-    console.log("PaymentForm component mounted. Checking config...");
-    try {
-      const config = getPaymentConfig();
-      console.log("Payment config successfully retrieved in PaymentForm:", config);
-    } catch (error) {
-      console.error("Error getting payment config in PaymentForm:", error);
-    }
-    enforceHTTPS();
-  }, [enforceHTTPS]);
-
-  const handleInputChange = (field: keyof PaymentFormData, value: string | number) => {
-    let processedValue = value;
-    
-    // Sanitize string inputs with security service
-    if (typeof value === 'string') {
-      processedValue = securitySanitize(value);
-    }
-    
-    // Handle amount input specifically
+  const handleInputChange = (field: keyof SimplePaymentFormData, value: string | number) => {
     if (field === 'amount' && typeof value === 'string') {
       const numericValue = parseFloat(value);
-      processedValue = isNaN(numericValue) ? 0 : numericValue;
+      value = isNaN(numericValue) ? 0 : numericValue;
     }
 
     setFormData(prev => ({
       ...prev,
-      [field]: processedValue,
+      [field]: value,
     }));
-
-    // Clear field-specific errors when user starts typing
-    setErrors(prev => prev.filter(error => error.field !== field));
-    setSubmitError(null);
+    setError(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Check if blocked by rate limiting
-    if (isBlocked) {
-      setSubmitError(`Too many attempts. Please try again later. Remaining attempts: ${remainingAttempts}`);
+    if (formData.amount <= 0) {
+      setError('אנא הזן סכום תקין');
       return;
     }
 
-    // Check rate limit
-    const rateLimitResult = checkRateLimit();
-    if (!rateLimitResult.allowed) {
-      setSubmitError(`Rate limit exceeded. Please try again later.`);
-      logSuspiciousActivity('rate_limit_exceeded', { attempts: rateLimitResult.remainingAttempts });
+    if (formData.amount < 10) {
+      setError('סכום מינימלי לתשלום: 10 ₪');
       return;
     }
 
-    // Validate form data
-    const validationErrors = validatePaymentForm(formData);
-    if (validationErrors.length > 0) {
-      setErrors(validationErrors);
-      logSuspiciousActivity('validation_failed', { errors: validationErrors });
+    if (formData.amount > 10000) {
+      setError('סכום מקסימלי לתשלום: 10,000 ₪');
       return;
-    }
-
-    // Security validation for payment amount
-    const amountValidation = validatePaymentAmount(formData.amount, formData.currency);
-    if (!amountValidation.valid) {
-      setSubmitError(`Payment amount validation failed: ${amountValidation.reasons.join(', ')}`);
-      logSuspiciousActivity('suspicious_amount', {
-        amount: formData.amount,
-        currency: formData.currency,
-        risk: amountValidation.risk,
-        reasons: amountValidation.reasons,
-      });
-      return;
-    }
-
-    // Log high-risk transactions
-    if (amountValidation.risk === 'high') {
-      logSuspiciousActivity('high_risk_transaction', {
-        amount: formData.amount,
-        currency: formData.currency,
-        reasons: amountValidation.reasons,
-      });
     }
 
     setIsSubmitting(true);
-    setSubmitError(null);
-    setErrors([]);
+    setError(null);
 
     try {
-      if (onSubmit) {
-        await onSubmit(formData);
-      } else {
-        // Create transaction record
-        const transaction: Transaction = {
-          id: `txn_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-          amount: formData.amount,
-          currency: formData.currency,
-          status: TransactionStatus.PENDING,
-          createdAt: new Date(),
-          paymentMethodId: 'lemon-squeezy',
-          customerInfo: {
-            email: formData.customerEmail,
-            name: formData.customerName,
-          },
-        };
+      const paymentData = {
+        amount: formData.amount,
+        currency: 'ILS',
+        customerEmail: formData.customerEmail || undefined,
+        customerName: formData.customerName || undefined,
+      };
 
-        // Log the transaction
-        transactionLogger.logTransaction(transaction);
-
-        // Process payment with Lemon Squeezy
-        const result = await lemonSqueezyService.processPayment(formData);
-        
-        if (!result.success) {
-          // Update transaction status to failed
-          transactionLogger.updateTransactionStatus(transaction.id, TransactionStatus.FAILED);
-          throw new Error('Payment system configuration is incomplete. Please contact support.');
-        }
-        
-        // If we reach here, the user should have been redirected to Lemon Squeezy
-        // This is a fallback in case the redirect didn't work
-        console.log('Payment initiated successfully:', result);
+      const result = await lemonSqueezyService.processPayment(paymentData);
+      
+      if (!result.success) {
+        throw new Error(result.error || 'התשלום נכשל. אנא נסה שוב.');
       }
     } catch (error) {
-      const errorDetails = handleError(error, 'payment_submission');
-      setSubmitError(errorDetails.userMessage);
+      setError(error instanceof Error ? error.message : 'שגיאה בעיבוד התשלום');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const getFieldError = (field: string): string | undefined => {
-    return errors.find(error => error.field === field)?.message;
+  const formatAmount = (amount: number): string => {
+    return new Intl.NumberFormat('he-IL', {
+      style: 'currency',
+      currency: 'ILS',
+    }).format(amount);
   };
-
-  const isFormValid = errors.length === 0 && formData.amount > 0;
-  const showProcessing = isProcessing || isSubmitting;
 
   return (
     <div className="payment-form">
@@ -215,25 +94,20 @@ const PaymentForm: React.FC<Partial<PaymentFormProps>> = ({
               type="number"
               id="amount"
               name="amount"
-              min={PAYMENT_CONFIG.VALIDATION.MIN_AMOUNT}
-              max={PAYMENT_CONFIG.VALIDATION.MAX_AMOUNT}
-              step="0.01"
+              min="10"
+              max="10000"
+              step="1"
               value={formData.amount || ''}
               onChange={(e) => handleInputChange('amount', e.target.value)}
-              className={`block w-full pl-7 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                getFieldError('amount') ? 'border-red-300' : 'border-gray-300'
-              }`}
-              placeholder="0.00"
-              disabled={showProcessing}
+              className="block w-full pl-7 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="הזן סכום בשקלים"
+              disabled={isSubmitting}
               required
             />
           </div>
-          {getFieldError('amount') && (
-            <p className="mt-1 text-sm text-red-600">{getFieldError('amount')}</p>
-          )}
           {formData.amount > 0 && (
             <p className="mt-1 text-sm text-gray-500">
-              Total: {formatAmount(formData.amount, formData.currency)}
+              סה"כ: {formatAmount(formData.amount)}
             </p>
           )}
         </div>
@@ -249,15 +123,10 @@ const PaymentForm: React.FC<Partial<PaymentFormProps>> = ({
             name="customerEmail"
             value={formData.customerEmail}
             onChange={(e) => handleInputChange('customerEmail', e.target.value)}
-            className={`block w-full px-3 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-              getFieldError('customerEmail') ? 'border-red-300' : 'border-gray-300'
-            }`}
+            className="block w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             placeholder="your@email.com"
-            disabled={showProcessing}
+            disabled={isSubmitting}
           />
-          {getFieldError('customerEmail') && (
-            <p className="mt-1 text-sm text-red-600">{getFieldError('customerEmail')}</p>
-          )}
         </div>
 
         {/* Customer Name */}
@@ -271,59 +140,38 @@ const PaymentForm: React.FC<Partial<PaymentFormProps>> = ({
             name="customerName"
             value={formData.customerName}
             onChange={(e) => handleInputChange('customerName', e.target.value)}
-            className={`block w-full px-3 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-              getFieldError('customerName') ? 'border-red-300' : 'border-gray-300'
-            }`}
-            placeholder="Your full name"
-            disabled={showProcessing}
+            className="block w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            placeholder="השם המלא שלך"
+            disabled={isSubmitting}
           />
-          {getFieldError('customerName') && (
-            <p className="mt-1 text-sm text-red-600">{getFieldError('customerName')}</p>
-          )}
         </div>
 
-        {/* Submit Error */}
-        {submitError && (
-          <ErrorMessage 
-            message={submitError}
-            title="Payment Error"
-            onRetry={isRetryable() ? () => retry(() => handleSubmit({ preventDefault: () => {} } as any)) : undefined}
-          />
+        {/* Error Display */}
+        {error && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+            <p className="text-sm text-red-600">{error}</p>
+          </div>
         )}
-
-        {/* User Feedback */}
-        <UserFeedback
-          error={currentError}
-          isLoading={showProcessing}
-          isRetrying={isRetrying}
-          retryCount={retryCount}
-          maxRetries={3}
-          onRetry={isRetryable() ? () => retry(() => handleSubmit({ preventDefault: () => {} } as any)) : undefined}
-          onDismiss={clearError}
-        />
 
         {/* Submit Button */}
         <div className="form-group">
           <button
             type="submit"
-            disabled={!isFormValid || showProcessing}
+            disabled={formData.amount <= 0 || isSubmitting}
             className={`w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${
-              !isFormValid || showProcessing
+              formData.amount <= 0 || isSubmitting
                 ? 'bg-gray-400 cursor-not-allowed'
                 : 'bg-blue-600 hover:bg-blue-700'
             }`}
           >
-            {showProcessing ? (
-              <>
-                <LoadingSpinner size="small" />
-                <span className="ml-2">מעבד תשלום...</span>
-              </>
+            {isSubmitting ? (
+              <span>מעבד תשלום...</span>
             ) : (
               <>
                 המשך לתשלום
                 {formData.amount > 0 && (
-                  <span className="ml-2">
-                    ({formatAmount(formData.amount, formData.currency)})
+                  <span className="mr-2">
+                    ({formatAmount(formData.amount)})
                   </span>
                 )}
               </>
@@ -333,7 +181,7 @@ const PaymentForm: React.FC<Partial<PaymentFormProps>> = ({
 
         {/* Security Notice */}
         <div className="text-center text-sm text-gray-500">
-          <div className="flex items-center justify-center space-x-1">
+          <div className="flex items-center justify-center space-x-2">
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
             </svg>

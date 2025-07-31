@@ -14,7 +14,11 @@
       "Bash(npm ls:*)",
       "Bash(netlify deploy:*)",
       "Bash(netlify env:list:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(del \"C:\\Users\\user\\Music\\recoverysite\\src\\hooks\\useReceipts.ts\")",
+      "Bash(del \"C:\\Users\\user\\Music\\recoverysite\\src\\hooks\\useTransactionLogger.ts\")",
+      "Bash(del \"C:\\Users\\user\\Music\\recoverysite\\src\\hooks\\useWebhookHandler.ts\")",
+      "Bash(find:*)"
     ],
     "deny": []
   }

@@ -310,13 +310,6 @@ export const HomePage: React.FC = () => {
                   התקשרו לקבלת הצעת מחיר
                 </a>
                 <a 
-                  href="/secure-payment" 
-                  className="btn-secondary"
-                  aria-label="לחצו לביצוע תשלום מאובטח"
-                >
-                  תשלום מיידי →
-                </a>
-                <a 
                   href="/article/12" 
                   className="btn-tertiary"
                   aria-label="לחצו לקריאת מחירון מפורט בבלוג"
