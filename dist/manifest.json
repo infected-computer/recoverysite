@@ -1,0 +1,44 @@
+{
+  "name": "דוקטור פיקס - שחזור קבצים מקצועי",
+  "short_name": "דוקטור פיקס",
+  "description": "שירותי שחזור קבצים מקצועיים מרחוק עם מעל 7 שנות ניסיון",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#7dd3fc",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "he",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "categories": ["business", "productivity", "utilities"],
+
+  "shortcuts": [
+    {
+      "name": "יצירת קשר מהיר",
+      "short_name": "קשר",
+      "description": "פנה אלינו לקבלת עזרה מיידית",
+      "url": "/contact"
+    },
+    {
+      "name": "מחירון",
+      "short_name": "מחירים",
+      "description": "צפה במחירון השירותים שלנו",
+      "url": "/pricing"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
+}

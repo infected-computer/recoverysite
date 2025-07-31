@@ -131,7 +131,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.1) 100%);
+            background: linear-gradient(180deg, rgba(230, 245, 255, 0.7) 0%, rgba(255, 255, 255, 0.5) 100%);
             z-index: 1;
         }
 
@@ -152,7 +152,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           display: grid;
           grid-template-columns: 1.3fr 0.7fr; /* Give more space to text */
           gap: 60px;
-          align-items: center;
+          align-items: start; /* Align content to the top */
+          padding-top: 8vh; /* Push content down from the top */
           justify-content: center;
         }
 
@@ -307,7 +308,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
  */
 export const heroSlideData: HeroSlide = {
     id: 'hard-drive-recovery',
-    title: 'שחזור נתונים אונליין תוך שעה מהבית',
+    title: 'שחזור נתונים אונליין תוך שעה בלי לצאת מהבית',
     subtitle: 'שחזור נתונים במהירות באמצעות תמיכה מרחוק',
     description: 'צוות מומחים ישחזר לכם את הקבצים החשובים לכם במהירות במחיר  הוגן ובמהירות ונוחות שלא תמצאו בשום מקום אחר',
     keywords: ['שחזור דיסק קשיח', 'שחזור נתונים', 'תיקון דיסק קשיח'],
