@@ -6,6 +6,11 @@ import { WhatsAppFloat } from "../components/layout/WhatsAppFloat";
 import SEO from "../components/SEO";
 import { useSEO, useBreadcrumbs } from "../hooks/useSEO";
 
+// Import new SEO components
+import { SEOHead } from "../components/seo/SEOHead";
+import { LocalBusinessSchema } from "../components/seo/LocalBusinessSchema";
+import { TLDRBox, getTLDRContent } from "../components/seo/TLDRBox";
+
 // Import new redesigned components
 import { HomePageHero } from "../components/sections/HeroSlider";
 import Services from "../components/sections/Services";
@@ -165,12 +170,15 @@ const Index = () => {
 
   return (
     <>
-      <SEO 
-        {...seoComponentData}
-        breadcrumbs={breadcrumbs}
-        serviceData={serviceData}
+      <SEOHead
+        title="שחזור קבצים מקצועי מרחוק | שירות אמין ללא הגעה פיזית"
+        description="שירותי שחזור קבצים מקצועיים מרחוק. מעל 7 שנות ניסיון, בדיקה חינמית, תשלום רק לאחר הצלחה."
+        keywords={["שחזור קבצים", "שחזור נתונים", "שחזור דיסק קשיח", "שחזור מרחוק", "תמיכה טכנית"]}
+        canonicalUrl="https://recoverysite.netlify.app/"
         ogType="website"
+        structuredData={[]}
       />
+      <LocalBusinessSchema />
       
       <div className="min-h-screen bg-background relative overflow-hidden">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-primary-foreground px-4 py-2 rounded">
@@ -182,6 +190,17 @@ const Index = () => {
         <main id="main-content" role="main">
           {/* Hero Section */}
           <HomePageHero />
+
+          {/* TL;DR Section */}
+          <section className="py-12 bg-gray-50">
+            <div className="container mx-auto px-4">
+              <TLDRBox 
+                points={getTLDRContent('homepage')}
+                variant="highlighted"
+                className="mb-8"
+              />
+            </div>
+          </section>
 
           {/* Services Section */}
           <div id="services-section">

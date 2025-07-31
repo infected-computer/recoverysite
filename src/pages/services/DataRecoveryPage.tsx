@@ -14,6 +14,14 @@ import { Shield } from 'lucide-react';
 import { Clock } from 'lucide-react';
 import { Award } from 'lucide-react';
 
+// Import new SEO components
+import { SEOHead } from "../../components/seo/SEOHead";
+import { ServiceSchema } from "../../components/seo/ServiceSchema";
+import { TLDRBox, getTLDRContent } from "../../components/seo/TLDRBox";
+import { FAQSection, getServiceFAQs } from "../../components/seo/FAQSection";
+import { ExpertProfile } from "../../components/seo/ExpertProfile";
+import { PersonSchema, getExpertProfiles } from "../../components/seo/PersonSchema";
+
 const DataRecoveryPage = () => {
   const seoData = {
     title: "שחזור קבצים מתקדם - דוקטור פיקס",
@@ -79,9 +87,21 @@ const DataRecoveryPage = () => {
     }
   ];
 
+  // Get expert data
+  const expertProfiles = getExpertProfiles();
+  const dataRecoveryExpert = expertProfiles[0]; // David Cohen
+
   return (
     <>
-      <SEO {...seoData} />
+      <SEOHead
+        title="שחזור קבצים מרחוק | שירות מקצועי עם שיעור הצלחה 97%"
+        description="שירות שחזור קבצים מקצועי מרחוק מכל סוגי המדיה - דיסקים קשיחים, SSD, כרטיסי זיכרון. בדיקה חינמית ותשלום רק לאחר הצלחה."
+        keywords={["שחזור קבצים", "שחזור נתונים", "דיסק קשיח", "SSD", "כרטיס זיכרון", "שחזור מרחוק"]}
+        canonicalUrl="https://recoverysite.netlify.app/services/data-recovery"
+        ogType="service"
+      />
+      <ServiceSchema serviceType="data-recovery" />
+      <PersonSchema person={dataRecoveryExpert} />
       
       <div className="min-h-screen bg-background">
         <Header />
@@ -94,6 +114,16 @@ const DataRecoveryPage = () => {
                 <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
                   שחזור קבצים מתקדם
                 </h1>
+                
+                {/* TL;DR Box */}
+                <div className="mb-8">
+                  <TLDRBox 
+                    points={getTLDRContent('data-recovery')}
+                    variant="highlighted"
+                    className="max-w-3xl mx-auto"
+                  />
+                </div>
+                
                 <p className="text-xl text-gray-600 mb-8 leading-relaxed">
                   אנחנו מתמחים בשחזור קבצים מכל סוגי האמצעי אחסון. עם כלים מתקדמים שפיתחנו במיוחד ושיעור הצלחה של 97%, אנחנו מחזירים לך את הקבצים החשובים ביותר.
                 </p>
@@ -220,8 +250,50 @@ const DataRecoveryPage = () => {
             </div>
           </section>
 
-          {/* CTA */}
+          {/* Expert Profile */}
+          <section className="py-20 bg-gray-50">
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  המומחה שלנו
+                </h2>
+                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                  הכר את המומחה שיטפל בשחזור הקבצים שלך
+                </p>
+              </div>
+              
+              <ExpertProfile
+                name={dataRecoveryExpert.name}
+                title={dataRecoveryExpert.jobTitle}
+                experience="מעל 10 שנות ניסיון בתחום שחזור קבצים ותמיכה טכנית"
+                certifications={[
+                  "הסמכה בשחזור קבצים מתקדם",
+                  "מומחה בטכנולוגיות אחסון",
+                  "הסמכת אבטחת מידע",
+                  "הכשרה בכלי שחזור מקצועיים"
+                ]}
+                linkedinUrl={dataRecoveryExpert.sameAs?.[0]}
+                bio={dataRecoveryExpert.description}
+                specialties={dataRecoveryExpert.knowsAbout}
+                education={dataRecoveryExpert.alumniOf}
+                yearsOfExperience={10}
+              />
+            </div>
+          </section>
+
+          {/* FAQ Section */}
           <section className="py-20">
+            <div className="container mx-auto px-4">
+              <FAQSection
+                items={getServiceFAQs('data-recovery')}
+                title="שאלות נפוצות על שחזור קבצים"
+                structured={true}
+              />
+            </div>
+          </section>
+
+          {/* CTA */}
+          <section className="py-20 bg-blue-50">
             <div className="container mx-auto px-4">
               <div className="max-w-2xl mx-auto text-center">
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">

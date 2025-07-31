@@ -1,0 +1,83 @@
+/* src/styles/fonts.css */
+
+/* Plex Sans Hebrew */
+@font-face {
+  font-family: 'Plex Sans Hebrew';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/src/assets/fonts/plex-sans-hebrew/PlexSansHebrew-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Plex Sans Hebrew';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/src/assets/fonts/plex-sans-hebrew/PlexSansHebrew-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Plex Sans Hebrew';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/src/assets/fonts/plex-sans-hebrew/PlexSansHebrew-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Plex Sans Hebrew';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/src/assets/fonts/plex-sans-hebrew/PlexSansHebrew-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Plex Sans Hebrew';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/src/assets/fonts/plex-sans-hebrew/PlexSansHebrew-ExtraBold.ttf') format('truetype');
+}
+
+/* Space Grotesk */
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/src/assets/fonts/space-grotesk/SpaceGrotesk-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/src/assets/fonts/space-grotesk/SpaceGrotesk-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/src/assets/fonts/space-grotesk/SpaceGrotesk-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/src/assets/fonts/space-grotesk/SpaceGrotesk-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/src/assets/fonts/space-grotesk/SpaceGrotesk-ExtraBold.ttf') format('truetype');
+}

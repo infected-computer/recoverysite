@@ -1,0 +1,10 @@
+# SPA fallback - serve index.html for all routes
+/*    /index.html   200
+
+# Redirect old URLs (if any)
+/data-recovery    /services/data-recovery    301
+/remote-support   /services/remote-support   301
+/system-repair    /services/system-repair    301
+
+# Force HTTPS
+http://recoverysite.netlify.app/*    https://recoverysite.netlify.app/:splat    301!
