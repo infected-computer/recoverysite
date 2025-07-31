@@ -170,7 +170,7 @@ const PaymentForm: React.FC<Partial<PaymentFormProps>> = ({
         if (!result.success) {
           // Update transaction status to failed
           transactionLogger.updateTransactionStatus(transaction.id, TransactionStatus.FAILED);
-          throw new Error(result.error || 'Payment processing failed');
+          throw new Error('Payment system configuration is incomplete. Please contact support.');
         }
         
         // If we reach here, the user should have been redirected to Lemon Squeezy

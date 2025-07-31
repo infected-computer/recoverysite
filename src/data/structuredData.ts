@@ -15,11 +15,11 @@ export interface StructuredDataConfig {
 export const createLocalBusinessSchema = () => ({
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "@id": "https://doctorfix.co.il/#organization",
+  "@id": "https://recoverysite.netlify.app/#organization",
   "name": "דוקטור פיקס - שחזור קבצים מקצועי",
   "alternateName": "Doctor Fix",
   "description": "שירותי שחזור קבצים מקצועיים מרחוק עם מעל 7 שנות ניסיון. שחזור דיסקים קשיחים, כרטיסי זיכרון ונתונים דיגיטליים.",
-  "url": "https://doctorfix.co.il",
+  "url": "https://recoverysite.netlify.app",
   "telephone": "+972-50-123-4567",
   "email": "doctorfix79@gmail.com",
   "foundingDate": "2017",
@@ -85,13 +85,13 @@ export const createLocalBusinessSchema = () => ({
     "closes": "14:00"
   },
   "image": [
-    "https://doctorfix.co.il/images/business/office-1.jpg",
-    "https://doctorfix.co.il/images/business/equipment-1.jpg",
-    "https://doctorfix.co.il/images/business/team-1.jpg"
+    "https://recoverysite.netlify.app/images/business/office-1.jpg",
+    "https://recoverysite.netlify.app/images/business/equipment-1.jpg",
+    "https://recoverysite.netlify.app/images/business/team-1.jpg"
   ],
   "logo": {
     "@type": "ImageObject",
-    "url": "https://doctorfix.co.il/logo.png",
+    "url": "https://recoverysite.netlify.app/logo.png",
     "width": 200,
     "height": 200
   },
@@ -184,7 +184,7 @@ export const createServiceSchema = (serviceConfig: {
   "url": serviceConfig.url,
   "category": serviceConfig.category || "Data Recovery Service",
   "provider": {
-    "@id": "https://doctorfix.co.il/#organization"
+    "@id": "https://recoverysite.netlify.app/#organization"
   },
   "areaServed": {
     "@type": "Country",
@@ -262,14 +262,14 @@ export const createArticleSchema = (articleConfig: {
   "author": {
     "@type": "Person",
     "name": articleConfig.author || "דוקטור פיקס",
-    "url": "https://doctorfix.co.il/about"
+    "url": "https://recoverysite.netlify.app/about"
   },
   "publisher": {
     "@type": "Organization",
     "name": "דוקטור פיקס",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://doctorfix.co.il/logo.png",
+      "url": "https://recoverysite.netlify.app/logo.png",
       "width": 200,
       "height": 200
     }
@@ -382,7 +382,7 @@ export const createReviewSchema = (reviewConfig: {
   "itemReviewed": {
     "@type": "LocalBusiness",
     "name": reviewConfig.itemName,
-    "@id": "https://doctorfix.co.il/#organization"
+    "@id": "https://recoverysite.netlify.app/#organization"
   },
   "reviewRating": {
     "@type": "Rating",
@@ -408,19 +408,19 @@ export const createReviewSchema = (reviewConfig: {
 export const createWebSiteSchema = () => ({
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "@id": "https://doctorfix.co.il/#website",
-  "url": "https://doctorfix.co.il",
+  "@id": "https://recoverysite.netlify.app/#website",
+  "url": "https://recoverysite.netlify.app",
   "name": "דוקטור פיקס - שחזור קבצים מקצועי",
   "description": "שירותי שחזור קבצים מקצועיים בישראל. מתמחים בשחזור דיסקים קשיחים, כרטיסי זיכרון ונתונים דיגיטליים.",
   "publisher": {
-    "@id": "https://doctorfix.co.il/#organization"
+    "@id": "https://recoverysite.netlify.app/#organization"
   },
   "inLanguage": "he-IL",
   "potentialAction": {
     "@type": "SearchAction",
     "target": {
       "@type": "EntryPoint",
-      "urlTemplate": "https://doctorfix.co.il/search?q={search_term_string}"
+      "urlTemplate": "https://recoverysite.netlify.app/search?q={search_term_string}"
     },
     "query-input": "required name=search_term_string"
   }
@@ -432,13 +432,13 @@ export const createWebSiteSchema = () => ({
 export const createOrganizationSchema = () => ({
   "@context": "https://schema.org",
   "@type": "Organization",
-  "@id": "https://doctorfix.co.il/#organization",
+  "@id": "https://recoverysite.netlify.app/#organization",
   "name": "דוקטור פיקס",
   "alternateName": "Doctor Fix",
-  "url": "https://doctorfix.co.il",
+  "url": "https://recoverysite.netlify.app",
   "logo": {
     "@type": "ImageObject",
-    "url": "https://doctorfix.co.il/logo.png",
+    "url": "https://recoverysite.netlify.app/logo.png",
     "width": 200,
     "height": 200
   },
@@ -490,7 +490,7 @@ export const createProductSchema = (productConfig: {
     "priceCurrency": productConfig.offers.priceCurrency,
     "availability": productConfig.offers.availability,
     "seller": {
-      "@id": "https://doctorfix.co.il/#organization"
+      "@id": "https://recoverysite.netlify.app/#organization"
     }
   },
   "aggregateRating": {
@@ -528,7 +528,7 @@ export const createEventSchema = (eventConfig: {
   "organizer": {
     "@type": "Organization",
     "name": eventConfig.organizer || "דוקטור פיקס",
-    "@id": "https://doctorfix.co.il/#organization"
+    "@id": "https://recoverysite.netlify.app/#organization"
   },
   "offers": {
     "@type": "Offer",
@@ -546,7 +546,7 @@ export const createEventSchema = (eventConfig: {
 export const hardDriveRecoveryService = createServiceSchema({
   name: "שחזור דיסק קשיח",
   description: "שירות שחזור מקצועי לדיסקים קשיחים פגומים עם שיעור הצלחה של 95%",
-  url: "https://doctorfix.co.il/שירותים/שחזור-דיסק-קשיח",
+  url: "https://recoverysite.netlify.app/שירותים/שחזור-דיסק-קשיח",
   priceRange: "₪400-₪1200",
   category: "Hard Drive Data Recovery",
   duration: "P1DT24H"
@@ -555,7 +555,7 @@ export const hardDriveRecoveryService = createServiceSchema({
 export const memoryCardRecoveryService = createServiceSchema({
   name: "שחזור כרטיס זיכרון",
   description: "שירות שחזור מקצועי לכרטיסי זיכרון פגומים מכל הסוגים",
-  url: "https://doctorfix.co.il/שירותים/שחזור-כרטיס-זיכרון",
+  url: "https://recoverysite.netlify.app/שירותים/שחזור-כרטיס-זיכרון",
   priceRange: "₪200-₪450",
   category: "Memory Card Data Recovery",
   duration: "PT12H"
@@ -564,7 +564,7 @@ export const memoryCardRecoveryService = createServiceSchema({
 export const remoteRecoveryService = createServiceSchema({
   name: "שחזור נתונים מרחוק",
   description: "שירות שחזור נתונים מרחוק מאובטח ומקצועי",
-  url: "https://doctorfix.co.il/שירותים/שחזור-נתונים-מרחוק",
+  url: "https://recoverysite.netlify.app/שירותים/שחזור-נתונים-מרחוק",
   priceRange: "₪300-₪800",
   category: "Remote Data Recovery",
   duration: "PT6H"
@@ -598,29 +598,29 @@ export const commonFAQs = createFAQSchema([
 export const howToRecoverFilesGuide = createHowToSchema({
   name: "איך לשחזר קבצים שנמחקו",
   description: "מדריך שלב אחר שלב לשחזור קבצים שנמחקו בטעות",
-  url: "https://doctorfix.co.il/מאמרים/איך-לשחזר-קבצים-שנמחקו",
-  image: "https://doctorfix.co.il/images/guides/how-to-recover-files.jpg",
+  url: "https://recoverysite.netlify.app/מאמרים/איך-לשחזר-קבצים-שנמחקו",
+  image: "https://recoverysite.netlify.app/images/guides/how-to-recover-files.jpg",
   totalTime: "PT30M",
   steps: [
     {
       name: "בדיקת פח המיחזור",
       text: "בדקו תחילה את פח המיחזור במחשב - לעיתים הקבצים עדיין נמצאים שם",
-      image: "https://doctorfix.co.il/images/guides/step1-recycle-bin.jpg"
+      image: "https://recoverysite.netlify.app/images/guides/step1-recycle-bin.jpg"
     },
     {
       name: "הפסקת שימוש במחשב",
       text: "הפסיקו מיד להשתמש במחשב כדי למנוע כתיבה על הקבצים הנמחקים",
-      image: "https://doctorfix.co.il/images/guides/step2-stop-using.jpg"
+      image: "https://recoverysite.netlify.app/images/guides/step2-stop-using.jpg"
     },
     {
       name: "הורדת תוכנת שחזור",
       text: "הורידו תוכנת שחזור מקצועית כמו Recuva או PhotoRec",
-      image: "https://doctorfix.co.il/images/guides/step3-download-software.jpg"
+      image: "https://recoverysite.netlify.app/images/guides/step3-download-software.jpg"
     },
     {
       name: "הרצת תהליך השחזור",
       text: "הריצו את תוכנת השחזור ובחרו את הכונן שממנו נמחקו הקבצים",
-      image: "https://doctorfix.co.il/images/guides/step4-run-recovery.jpg"
+      image: "https://recoverysite.netlify.app/images/guides/step4-run-recovery.jpg"
     }
   ]
 });

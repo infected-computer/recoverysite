@@ -4,15 +4,15 @@ export const PAYMENT_CONFIG = {
   // Lemon Squeezy configuration
   LEMON_SQUEEZY: {
     API_BASE_URL: 'https://api.lemonsqueezy.com/v1',
-    API_KEY: import.meta.env.VITE_LEMON_SQUEEZY_API_KEY || '',
-    STORE_ID: import.meta.env.VITE_LEMON_SQUEEZY_STORE_ID || '',
-    ENVIRONMENT: (import.meta.env.VITE_LEMON_SQUEEZY_ENVIRONMENT as 'sandbox' | 'production') || 'sandbox',
-    WEBHOOK_SECRET: import.meta.env.VITE_LEMON_SQUEEZY_WEBHOOK_SECRET || '',
+    API_KEY: import.meta.env.LEMON_SQUEEZY_API_KEY || '',
+    STORE_ID: import.meta.env.LEMON_SQUEEZY_STORE_ID || '',
+    ENVIRONMENT: (import.meta.env.LEMON_SQUEEZY_ENVIRONMENT as 'sandbox' | 'production') || 'sandbox',
+    WEBHOOK_SECRET: import.meta.env.LEMON_SQUEEZY_WEBHOOK_SECRET || '',
   },
 
   // Hidden page configuration
   HIDDEN_PAGE: {
-    ACCESS_TOKEN: import.meta.env.VITE_HIDDEN_PAGE_ACCESS_TOKEN || 'default-token',
+    ACCESS_TOKEN: import.meta.env.HIDDEN_PAGE_ACCESS_TOKEN || 'default-token',
     PATH: '/secure-payment',
   },
 

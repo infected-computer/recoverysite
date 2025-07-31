@@ -25,7 +25,7 @@ const ProcessPage = () => {
     title: "תהליך שחזור קבצים מקצועי | איך זה עובד | דוקטור פיקס",
     description: "מדריך מפורט על תהליך שחזור הקבצים המקצועי שלנו. 6 שלבים פשוטים, בדיקה חינמית, תשלום רק בהצלחה. למדו איך אנחנו מחזירים לכם את הקבצים החשובים.",
     keywords: ["תהליך שחזור קבצים", "איך עובד שחזור נתונים", "שלבי שחזור", "שחזור מרחוק", "שחזור נתונים מקצועי"],
-    canonical: "https://doctorfix.co.il/process"
+    canonical: "https://recoverysite.netlify.app/process"
   };
 
   useSEO(seoData);

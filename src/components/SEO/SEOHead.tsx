@@ -1,276 +1,84 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
-import { useSEO, SEOData } from '../../hooks/useSEO';
-import { getSEOTemplate, generateSEOData } from '../../data/seoTemplates';
+import { Helmet } from 'react-helmet-async';
 
-interface SEOHeadProps {
-  /** נתוני SEO מותאמים אישית (אופציונלי) */
-  customSEO?: Partial<SEOData>;
-  /** האם להשתמש ב-template אוטומטי לפי route */
-  useAutoTemplate?: boolean;
-  /** נתוני SEO מלאים (דורס את ה-template) */
-  seoData?: SEOData;
-}
-
-/**
- * רכיב SEO מתקדם שמנהל את כל ה-meta tags בראש הדף
- * תומך ב-templates אוטומטיים לפי route ובהתאמה אישית
- */
-export const SEOHead: React.FC<SEOHeadProps> = ({
-  customSEO,
-  useAutoTemplate = true,
-  seoData
-}) => {
-  const location = useLocation();
-  
-  // קבלת נתוני SEO סופיים
-  const finalSEOData = React.useMemo(() => {
-    if (seoData) {
-      return seoData;
-    }
-
-    if (useAutoTemplate) {
-      const template = getSEOTemplate(location.pathname);
-      return generateSEOData(template, customSEO, location.pathname);
-    }
-
-    // fallback לדף הבית אם אין template
-    const homeTemplate = getSEOTemplate('/');
-    return generateSEOData(homeTemplate, customSEO, location.pathname);
-  }, [location.pathname, customSEO, useAutoTemplate, seoData]);
-
-  // שימוש ב-hook לעדכון ה-meta tags
-  useSEO(finalSEOData);
-
-  // הרכיב לא מרנדר כלום - הוא רק מעדכן את ה-head
-  return null;
-};
-
-/**
- * רכיב SEO פשוט לדפים עם נתונים בסיסיים
- */
-interface SimpleSEOProps {
+export interface SEOHeadProps {
   title: string;
   description: string;
   keywords?: string[];
-  image?: string;
-}
-
-export const SimpleSEO: React.FC<SimpleSEOProps> = ({
-  title,
-  description,
-  keywords = [],
-  image
-}) => {
-  const location = useLocation();
-  const baseUrl = 'https://doctorfix.co.il';
-  
-  const seoData: SEOData = {
-    title,
-    description,
-    keywords,
-    canonical: `${baseUrl}${location.pathname}`,
-    robots: 'index,follow',
-    author: 'דוקטור פיקס',
-    openGraph: {
-      title,
-      description,
-      image: image ? `${baseUrl}${image}` : `${baseUrl}/images/og/default-og.jpg`,
-      url: `${baseUrl}${location.pathname}`,
-      type: 'website',
-      siteName: 'דוקטור פיקס',
-      locale: 'he_IL'
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      image: image ? `${baseUrl}${image}` : `${baseUrl}/images/twitter/default-twitter.jpg`,
-      creator: '@doctorfix_il',
-      site: '@doctorfix_il'
-    },
-    hreflang: {
-      'he-IL': `${baseUrl}${location.pathname}`,
-      'x-default': `${baseUrl}${location.pathname}`
-    }
-  };
-
-  return <SEOHead seoData={seoData} useAutoTemplate={false} />;
-};
-
-/**
- * רכיב SEO למאמרים עם structured data מתקדם
- */
-interface ArticleSEOProps {
-  title: string;
-  description: string;
-  keywords?: string[];
-  image?: string;
+  canonicalUrl?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article' | 'service';
+  structuredData?: object[];
+  noindex?: boolean;
   author?: string;
-  publishedDate?: string;
-  modifiedDate?: string;
-  readingTime?: number;
+  publishedTime?: string;
+  modifiedTime?: string;
 }
 
-export const ArticleSEO: React.FC<ArticleSEOProps> = ({
+export const SEOHead: React.FC<SEOHeadProps> = ({
   title,
   description,
   keywords = [],
-  image,
-  author = 'דוקטור פיקס',
-  publishedDate,
-  modifiedDate,
-  readingTime
+  canonicalUrl,
+  ogImage = 'https://recoverysite.netlify.app/og-image.jpg',
+  ogType = 'website',
+  structuredData = [],
+  noindex = false,
+  author,
+  publishedTime,
+  modifiedTime
 }) => {
-  const location = useLocation();
-  const baseUrl = 'https://doctorfix.co.il';
-  
-  const articleJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": title,
-    "description": description,
-    "image": image ? `${baseUrl}${image}` : `${baseUrl}/images/og/default-og.jpg`,
-    "author": {
-      "@type": "Person",
-      "name": author
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "דוקטור פיקס",
-      "logo": {
-        "@type": "ImageObject",
-        "url": `${baseUrl}/logo.png`
-      }
-    },
-    "datePublished": publishedDate,
-    "dateModified": modifiedDate || publishedDate,
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `${baseUrl}${location.pathname}`
-    }
-  };
+  const siteUrl = 'https://recoverysite.netlify.app';
+  const fullTitle = title.includes('שחזור קבצים') ? title : `${title} | שחזור קבצים מקצועי`;
+  const fullCanonicalUrl = canonicalUrl || `${siteUrl}${window.location.pathname}`;
 
-  if (readingTime) {
-    articleJsonLd["timeRequired"] = `PT${readingTime}M`;
-  }
-
-  const seoData: SEOData = {
-    title,
-    description,
-    keywords,
-    canonical: `${baseUrl}${location.pathname}`,
-    robots: 'index,follow',
-    author,
-    openGraph: {
-      title,
-      description,
-      image: image ? `${baseUrl}${image}` : `${baseUrl}/images/og/default-og.jpg`,
-      url: `${baseUrl}${location.pathname}`,
-      type: 'article',
-      siteName: 'דוקטור פיקס',
-      locale: 'he_IL'
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      image: image ? `${baseUrl}${image}` : `${baseUrl}/images/twitter/default-twitter.jpg`,
-      creator: '@doctorfix_il',
-      site: '@doctorfix_il'
-    },
-    jsonLd: [articleJsonLd],
-    hreflang: {
-      'he-IL': `${baseUrl}${location.pathname}`,
-      'x-default': `${baseUrl}${location.pathname}`
-    }
-  };
-
-  return <SEOHead seoData={seoData} useAutoTemplate={false} />;
-};
-
-/**
- * רכיב SEO לדפי שירות עם structured data מתקדם
- */
-interface ServiceSEOProps {
-  serviceName: string;
-  description: string;
-  keywords?: string[];
-  image?: string;
-  priceRange?: string;
-  areaServed?: string;
-}
-
-export const ServiceSEO: React.FC<ServiceSEOProps> = ({
-  serviceName,
-  description,
-  keywords = [],
-  image,
-  priceRange,
-  areaServed = "ישראל"
-}) => {
-  const location = useLocation();
-  const baseUrl = 'https://doctorfix.co.il';
-  
-  const serviceJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": serviceName,
-    "description": description,
-    "provider": {
-      "@id": `${baseUrl}/#organization`
-    },
-    "areaServed": {
-      "@type": "Country",
-      "name": areaServed
-    },
-    "availableChannel": {
-      "@type": "ServiceChannel",
-      "serviceUrl": `${baseUrl}${location.pathname}`,
-      "serviceSmsNumber": "+972-50-123-4567"
-    }
-  };
-
-  if (priceRange) {
-    serviceJsonLd["offers"] = {
-      "@type": "Offer",
-      "priceRange": priceRange,
-      "priceCurrency": "ILS"
-    };
-  }
-
-  const title = `${serviceName} מקצועי | דוקטור פיקס`;
-  
-  const seoData: SEOData = {
-    title,
-    description,
-    keywords,
-    canonical: `${baseUrl}${location.pathname}`,
-    robots: 'index,follow',
-    author: 'דוקטור פיקס',
-    openGraph: {
-      title,
-      description,
-      image: image ? `${baseUrl}${image}` : `${baseUrl}/images/og/default-og.jpg`,
-      url: `${baseUrl}${location.pathname}`,
-      type: 'website',
-      siteName: 'דוקטור פיקס',
-      locale: 'he_IL'
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      image: image ? `${baseUrl}${image}` : `${baseUrl}/images/twitter/default-twitter.jpg`,
-      creator: '@doctorfix_il',
-      site: '@doctorfix_il'
-    },
-    jsonLd: [serviceJsonLd],
-    hreflang: {
-      'he-IL': `${baseUrl}${location.pathname}`,
-      'x-default': `${baseUrl}${location.pathname}`
-    }
-  };
-
-  return <SEOHead seoData={seoData} useAutoTemplate={false} />;
+  return (
+    <Helmet>
+      {/* Basic Meta Tags */}
+      <title>{fullTitle}</title>
+      <meta name="description" content={description} />
+      {keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
+      {author && <meta name="author" content={author} />}
+      
+      {/* Canonical URL */}
+      <link rel="canonical" href={fullCanonicalUrl} />
+      
+      {/* Robots */}
+      {noindex && <meta name="robots" content="noindex, nofollow" />}
+      
+      {/* Open Graph */}
+      <meta property="og:title" content={fullTitle} />
+      <meta property="og:description" content={description} />
+      <meta property="og:type" content={ogType} />
+      <meta property="og:url" content={fullCanonicalUrl} />
+      <meta property="og:image" content={ogImage} />
+      <meta property="og:locale" content="he_IL" />
+      <meta property="og:site_name" content="שחזור קבצים מקצועי" />
+      
+      {/* Twitter Card */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={fullTitle} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={ogImage} />
+      
+      {/* Article specific meta tags */}
+      {ogType === 'article' && publishedTime && (
+        <meta property="article:published_time" content={publishedTime} />
+      )}
+      {ogType === 'article' && modifiedTime && (
+        <meta property="article:modified_time" content={modifiedTime} />
+      )}
+      {ogType === 'article' && author && (
+        <meta property="article:author" content={author} />
+      )}
+      
+      {/* Structured Data */}
+      {structuredData.map((data, index) => (
+        <script
+          key={index}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+        />
+      ))}
+    </Helmet>
+  );
 };

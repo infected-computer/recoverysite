@@ -23,7 +23,7 @@ const Index = () => {
     title: "שחזור קבצים מקצועי בישראל | דוקטור פיקס - שיעור הצלחה 97%",
     description: "שירות שחזור קבצים מקצועי מרחוק עם מעל 7 שנות ניסיון. שחזור דיסקים קשיחים, כרטיסי זיכרון ונתונים דיגיטליים. הערכת מחיר חינמית!",
     keywords: ["שחזור קבצים", "שחזור נתונים", "שחזור דיסק קשיח"],
-    canonical: "https://doctorfix.co.il/"
+    canonical: "https://recoverysite.netlify.app/"
   };
   
   useSEO(seoData);

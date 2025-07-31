@@ -6,6 +6,13 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# Force HTTPS redirect
+[[redirects]]
+  from = "http://recoverysite.netlify.app/*"
+  to = "https://recoverysite.netlify.app/:splat"
+  status = 301
+  force = true
+
 # Serverless function rewrite
 [[redirects]]
   from = "/api/*"

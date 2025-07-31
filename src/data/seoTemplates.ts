@@ -330,7 +330,7 @@ export const generateSEOData = (
   customData?: Partial<SEOData>,
   currentUrl?: string
 ): SEOData => {
-  const baseUrl = 'https://doctorfix.co.il';
+  const baseUrl = 'https://recoverysite.netlify.app';
   const canonical = currentUrl ? `${baseUrl}${currentUrl}` : baseUrl;
 
   return {

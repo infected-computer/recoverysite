@@ -82,7 +82,7 @@ export const PricingPage = () => {
     title: "מחירון שחזור קבצים | מחירים שקופים - דוקטור פיקס",
     description: "מחירון שקוף לשחזור קבצים. עלות שחזור נתונים מ-₪300. הערכת מחיר חינמית לכל סוגי הדיסקים וכרטיסי הזיכרון.",
     keywords: ["מחיר שחזור קבצים", "מחירון שחזור נתונים", "עלות שחזור"],
-    canonical: "https://doctorfix.co.il/pricing"
+    canonical: "https://recoverysite.netlify.app/pricing"
   };
   
   useSEO(seoData);
