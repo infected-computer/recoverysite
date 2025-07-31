@@ -34,13 +34,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Preload the background image for better performance
+  // Simple image loading
   useEffect(() => {
     const img = new Image();
     img.src = slide.background;
-    img.onload = () => {
-      setIsLoaded(true);
-    };
+    img.onload = () => setIsLoaded(true);
   }, [slide.background]);
 
   return (

@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:ssg",
-    "build:spa": "vite build",
+    "build": "npm run build:ssg && npm run postbuild",
+    "build:spa": "vite build && npm run postbuild",
     "build:ssg": "node scripts/build-ssg.js",
+    "postbuild": "node scripts/fix-mime-types.js",
+    "debug:build": "node scripts/debug-build.js",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",

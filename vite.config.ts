@@ -20,6 +20,7 @@ export default defineConfig(({ mode }) => ({
     react(),
     mode === 'development' && componentTagger(),
     visualizer({ open: true }),
+
     // Sitemap plugin disabled temporarily due to import issues
     // mode === 'production' && sitemapPlugin({
     //   baseUrl: 'https://recoverysite.netlify.app',
@@ -75,7 +76,7 @@ export default defineConfig(({ mode }) => ({
           return `assets/js/[name]-[hash].js`;
         },
         
-        // Optimize asset file names
+        // Optimize asset file names with proper extensions
         assetFileNames: (assetInfo) => {
           const info = assetInfo.name?.split('.') || [];
           const ext = info[info.length - 1];
@@ -85,7 +86,7 @@ export default defineConfig(({ mode }) => ({
           }
           
           if (/\.(css)$/i.test(assetInfo.name || '')) {
-            return `assets/css/[name]-[hash].${ext}`;
+            return `assets/css/[name]-[hash].css`;
           }
           
           if (/\.(woff2?|eot|ttf|otf)$/i.test(assetInfo.name || '')) {
@@ -130,7 +131,13 @@ export default defineConfig(({ mode }) => ({
     
     // CSS optimization
     cssCodeSplit: true,
-    cssMinify: true
+    cssMinify: true,
+    
+    // Ensure proper file generation
+    emptyOutDir: true,
+    
+    // Write bundle info for debugging
+    reportCompressedSize: true
   },
   
   // Optimize dependencies

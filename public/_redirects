@@ -6,22 +6,28 @@
 # Force HTTPS
 http://recoverysite.netlify.app/*    https://recoverysite.netlify.app/:splat    301!
 
-# Don't redirect assets, API routes, or files with extensions
-/assets/*  200
-/api/*     200
-/*.js      200
-/*.css     200
-/*.json    200
-/*.xml     200
-/*.txt     200
-/*.ico     200
-/*.png     200
-/*.jpg     200
-/*.jpeg    200
-/*.webp    200
-/*.svg     200
-/*.woff    200
-/*.woff2   200
+# Static assets - serve directly, don't redirect to SPA
+/assets/*     200!
+/api/*        200!
+/*.js         200!
+/*.css        200!
+/*.json       200!
+/*.xml        200!
+/*.txt        200!
+/*.ico        200!
+/*.png        200!
+/*.jpg        200!
+/*.jpeg       200!
+/*.webp       200!
+/*.svg        200!
+/*.woff       200!
+/*.woff2      200!
+/*.ttf        200!
+/*.map        200!
 
-# SPA fallback - serve index.html for all other routes
-/*    /index.html   200
+# Specific patterns for Vite build output
+/assets/js/*  200!
+/assets/css/* 200!
+
+# SPA fallback - ONLY for routes without file extensions
+/*            /index.html   200
