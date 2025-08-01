@@ -37,7 +37,7 @@ export default defineConfig(({ mode }) => ({
           vendor: ['react', 'react-dom'],
           router: ['react-router-dom'],
           ui: ['@radix-ui/react-dialog', '@radix-ui/react-tooltip'],
-          articles: ['src/data/articles.ts'],
+
         },
         // נתיבי קבצים ברורים
         entryFileNames: 'assets/[name]-[hash].js',

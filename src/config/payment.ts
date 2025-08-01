@@ -18,7 +18,7 @@ export const PAYMENT_CONFIG = {
   // Hidden page configuration
   HIDDEN_PAGE: {
     ACCESS_TOKEN: import.meta.env.VITE_HIDDEN_PAGE_ACCESS_TOKEN || 'default-token',
-    PATH: '/secure-payment',
+    PATH: '/pay',
   },
 
   // Payment validation rules

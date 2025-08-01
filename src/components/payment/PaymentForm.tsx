@@ -41,8 +41,8 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ onSubmit, isProcessing = fals
       return;
     }
 
-    if (formData.amount < 10) {
-      setError('סכום מינימלי לתשלום: 10 ₪');
+    if (formData.amount < 1) {
+      setError('סכום מינימלי לתשלום: 1 ₪');
       return;
     }
 
@@ -96,15 +96,16 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ onSubmit, isProcessing = fals
               type="number"
               id="amount"
               name="amount"
-              min="10"
+              min="1"
               max="10000"
               step="1"
               value={formData.amount || ''}
               onChange={(e) => handleInputChange('amount', e.target.value)}
-              className="block w-full pl-7 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              placeholder="הזן סכום בשקלים"
+              className="block w-full pl-7 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg"
+              placeholder="הזן סכום"
               disabled={isProcessing}
               required
+              autoFocus
             />
           </div>
           {formData.amount > 0 && (
