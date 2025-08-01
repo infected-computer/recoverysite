@@ -4,7 +4,7 @@ Allow: /
 # Disallow admin and private areas
 Disallow: /admin/
 Disallow: /private/
-Disallow: /_next/
+Disallow: /.netlify/
 Disallow: /api/
 
 # Allow important files
@@ -15,5 +15,5 @@ Allow: /favicon.ico
 # Sitemap location
 Sitemap: https://recoverysite.netlify.app/sitemap.xml
 
-# Crawl delay (optional)
+# Crawl delay
 Crawl-delay: 1

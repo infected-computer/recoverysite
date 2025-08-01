@@ -1,10 +1,28 @@
 [build]
-  command = "npm install && npm run build && npm run debug:build"
+  command = "npm install && npm run build:production"
   functions = "netlify/functions"
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "20"
+  NPM_VERSION = "10"
+
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+[build.processing.html]
+  pretty_urls = true
+
+[build.processing.images]
+  compress = true
 
 [[redirects]]
   from = "/data-recovery"
@@ -39,6 +57,7 @@
 
 [functions]
   node_bundler = "esbuild"
+  directory = "netlify/functions"
 
 [context.production.environment]
   NODE_ENV = "production"
@@ -47,35 +66,68 @@
 [context.deploy-preview.environment]
   NODE_ENV = "development"
 
+[context.branch-deploy.environment]
+  NODE_ENV = "development"
+
+# Headers for better performance and security
 [[headers]]
-  for = "/*.css"
+  for = "/assets/*.css"
   [headers.values]
-    Content-Type = "text/css"
+    Content-Type = "text/css; charset=UTF-8"
     Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
-  for = "/*.js"
+  for = "/assets/*.js"
   [headers.values]
-    Content-Type = "application/javascript"
+    Content-Type = "application/javascript; charset=UTF-8"
     Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
-  for = "/assets/*"
+  for = "/assets/fonts/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, s-maxage=86400"
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Content-Type = "application/xml; charset=UTF-8"
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=UTF-8"
+    Cache-Control = "public, max-age=86400"
 
 [[headers]]
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
-    X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https://www.google-analytics.com https://api.lemonsqueezy.com https://*.netlify.app; frame-src 'none'; object-src 'none'; base-uri 'self';"
 
 [[headers]]
   for = "/.netlify/functions/*"
   [headers.values]
     Access-Control-Allow-Origin = "*"
-    Access-Control-Allow-Headers = "Content-Type"
-    Access-Control-Allow-Methods = "POST, OPTIONS"
-    Cache-Control = "no-cache"
+    Access-Control-Allow-Headers = "Content-Type, Authorization"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+    Cache-Control = "no-cache, no-store, must-revalidate"

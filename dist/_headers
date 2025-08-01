@@ -1,65 +1,28 @@
-# Cache static assets for 1 year with correct MIME types
+# Auto-generated headers for optimal performance
 /assets/*.css
+  Content-Type: text/css; charset=UTF-8
   Cache-Control: public, max-age=31536000, immutable
-  Content-Type: text/css
+
 /assets/*.js
-  Cache-Control: public, max-age=31536000, immutable
-  Content-Type: application/javascript
-/assets/*
+  Content-Type: application/javascript; charset=UTF-8
   Cache-Control: public, max-age=31536000, immutable
 
-# Cache JavaScript and CSS files with correct MIME types
-/*.js
-  Cache-Control: public, max-age=31536000, immutable
-  Content-Type: application/javascript
-/*.css
-  Cache-Control: public, max-age=31536000, immutable
-  Content-Type: text/css
-
-# Cache fonts
-/*.woff2
-  Cache-Control: public, max-age=31536000, immutable
-/*.woff
-  Cache-Control: public, max-age=31536000, immutable
-/*.ttf
+/assets/fonts/*
   Cache-Control: public, max-age=31536000, immutable
 
-# Cache images with shorter duration for updates
-/*.jpg
-  Cache-Control: public, max-age=2592000
-/*.jpeg
-  Cache-Control: public, max-age=2592000
-/*.png
-  Cache-Control: public, max-age=2592000
-/*.webp
-  Cache-Control: public, max-age=2592000
-/*.avif
-  Cache-Control: public, max-age=2592000
-/*.svg
+/assets/images/*
   Cache-Control: public, max-age=2592000
 
-# Cache HTML pages with shorter duration
 /*.html
   Cache-Control: public, max-age=3600, s-maxage=86400
+
 /
   Cache-Control: public, max-age=3600, s-maxage=86400
 
-# Cache sitemap and robots
 /sitemap.xml
+  Content-Type: application/xml; charset=UTF-8
   Cache-Control: public, max-age=86400
+
 /robots.txt
+  Content-Type: text/plain; charset=UTF-8
   Cache-Control: public, max-age=86400
-
-# Security headers
-/*
-  X-Frame-Options: DENY
-  X-Content-Type-Options: nosniff
-  X-XSS-Protection: 1; mode=block
-  Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: camera=(), microphone=(), geolocation=()
-
-
-
-# API routes (if any)
-/api/*
-  Cache-Control: public, max-age=300, s-maxage=600

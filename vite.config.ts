@@ -2,7 +2,6 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
-// import { sitemapPlugin, createSitemapDevMiddleware } from "./src/plugins/vite-sitemap-plugin";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -17,13 +16,6 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     mode === 'development' && componentTagger(),
-
-    // Sitemap plugin disabled temporarily due to import issues
-    // mode === 'production' && sitemapPlugin({
-    //   baseUrl: 'https://recoverysite.netlify.app',
-    //   generateRobots: true,
-    //   generateImages: true
-    // })
   ].filter(Boolean),
   resolve: {
     alias: {
@@ -32,24 +24,27 @@ export default defineConfig(({ mode }) => ({
     // Ensure single React instance
     dedupe: ['react', 'react-dom']
   },
+  css: {
+    postcss: './postcss.config.cjs', // Explicit path to PostCSS config
+  },
   build: {
     // Enable source maps for production debugging
     sourcemap: mode === 'development',
     
+    // Output directory
+    outDir: 'dist',
+    
+    // Empty output directory before build
+    emptyOutDir: true,
+    
     // Optimize chunk splitting
     rollupOptions: {
-      // Ensure single instances of critical dependencies
-      external: (id) => {
-        // Don't externalize anything, but ensure single instances
-        return false;
-      },
       output: {
-        // Fixed manual chunk splitting - ensure React stays together
+        // Manual chunks for optimal loading
         manualChunks: {
-          // Keep React core together to avoid context issues
           'react-vendor': ['react', 'react-dom', 'react/jsx-runtime'],
           'react-router': ['react-router-dom'],
-          'ui-vendor': [
+          'ui-core': [
             '@radix-ui/react-dialog', 
             '@radix-ui/react-dropdown-menu', 
             '@radix-ui/react-toast',
@@ -58,39 +53,51 @@ export default defineConfig(({ mode }) => ({
             '@radix-ui/react-checkbox',
             '@radix-ui/react-select'
           ],
+          'ui-extended': [
+            '@radix-ui/react-label',
+            '@radix-ui/react-popover',
+            '@radix-ui/react-separator',
+            '@radix-ui/react-slot',
+            '@radix-ui/react-switch',
+            '@radix-ui/react-tabs',
+            '@radix-ui/react-toggle',
+            '@radix-ui/react-tooltip'
+          ],
           'form-vendor': ['react-hook-form', '@hookform/resolvers', 'zod'],
           'query-vendor': ['@tanstack/react-query'],
           'animation-vendor': ['framer-motion'],
           'icons-vendor': ['lucide-react'],
-          'utils-vendor': ['clsx', 'class-variance-authority', 'tailwind-merge', 'date-fns']
+          'utils': ['clsx', 'class-variance-authority', 'tailwind-merge', 'date-fns']
         },
         
         // Optimize chunk file names
         chunkFileNames: (chunkInfo) => {
           const facadeModuleId = chunkInfo.facadeModuleId ? 
-            chunkInfo.facadeModuleId.split('/').pop()?.replace('.tsx', '').replace('.ts', '') : 
+            chunkInfo.facadeModuleId.split('/').pop()?.replace(/\.(tsx?|jsx?)$/, '') : 
             'chunk';
-          return `assets/js/[name]-[hash].js`;
+          return `assets/js/${facadeModuleId}-[hash].js`;
         },
         
-        // Optimize asset file names with proper extensions
+        // Optimize entry file names
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        
+        // Optimize asset file names
         assetFileNames: (assetInfo) => {
-          const info = assetInfo.name?.split('.') || [];
-          const ext = info[info.length - 1];
-          
-          if (/\.(png|jpe?g|svg|gif|tiff|bmp|ico)$/i.test(assetInfo.name || '')) {
-            return `assets/images/[name]-[hash].${ext}`;
-          }
+          const extType = assetInfo.name?.split('.').pop() || '';
           
           if (/\.(css)$/i.test(assetInfo.name || '')) {
-            return `assets/css/[name]-[hash].css`;
+            return `assets/css/[name]-[hash][extname]`;
+          }
+          
+          if (/\.(png|jpe?g|svg|gif|webp|avif|ico)$/i.test(assetInfo.name || '')) {
+            return `assets/images/[name]-[hash][extname]`;
           }
           
           if (/\.(woff2?|eot|ttf|otf)$/i.test(assetInfo.name || '')) {
-            return `assets/fonts/[name]-[hash].${ext}`;
+            return `assets/fonts/[name]-[hash][extname]`;
           }
           
-          return `assets/[name]-[hash].${ext}`;
+          return `assets/[name]-[hash][extname]`;
         }
       }
     },
@@ -103,7 +110,6 @@ export default defineConfig(({ mode }) => ({
         drop_console: mode === 'production',
         drop_debugger: mode === 'production',
         pure_funcs: mode === 'production' ? ['console.log', 'console.info', 'console.warn'] : [],
-        // Additional optimizations for unused code removal
         dead_code: true,
         unused: true,
         keep_fargs: false,
@@ -120,20 +126,14 @@ export default defineConfig(({ mode }) => ({
     // Chunk size warnings
     chunkSizeWarningLimit: 1000,
     
-    // Asset inlining threshold - increase for better performance
-    assetsInlineLimit: 8192,
-    
-    // Image optimization
-    assetsInclude: ['**/*.webp', '**/*.avif'],
+    // Asset inlining threshold
+    assetsInlineLimit: 4096,
     
     // CSS optimization
     cssCodeSplit: true,
     cssMinify: true,
     
-    // Ensure proper file generation
-    emptyOutDir: true,
-    
-    // Write bundle info for debugging
+    // Report compressed size
     reportCompressedSize: false
   },
   
@@ -146,10 +146,14 @@ export default defineConfig(({ mode }) => ({
       'react/jsx-runtime',
       'react-router-dom',
       '@tanstack/react-query',
-      'react-helmet-async'
+      'react-helmet-async',
+      'lucide-react',
+      'framer-motion',
+      'clsx',
+      'tailwind-merge'
     ],
     exclude: ['@vite/client', '@vite/env'],
-    // Force pre-bundling of React to avoid runtime issues
+    // Force pre-bundling
     force: true
   },
   
@@ -159,7 +163,7 @@ export default defineConfig(({ mode }) => ({
     drop: mode === 'production' ? ['console', 'debugger'] : [],
     // Enable tree shaking
     treeShaking: true,
-    // Additional minification
+    // Minification
     legalComments: 'none'
   }
 }));
