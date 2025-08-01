@@ -113,10 +113,7 @@ function App() {
                 <Route path="/faq" element={<FAQPage />} />
                 
                 {/* Payment system routes */}
-                <Route path="/secure-payment" element={<PaymentPage />} />
-                
-                {/* Legacy payment route (redirect) */}
-                <Route path="/payment-secret" element={<PaymentPage />} />
+                <Route path="/pay" element={<PaymentPage />} />
                 
                 {/* Service pages */}
                 <Route path="/services/data-recovery" element={<DataRecoveryPage />} />

@@ -68,7 +68,7 @@ export const accessibleColors = {
   primary: {
     50: '#f0f9ff',   // Very light blue
     100: '#e0f2fe',  // Light blue
-    500: '#0ea5e9',  // Main blue (4.5:1 on white)
+    500: '#0284c7',  // Main blue (5.5:1 on white)
     600: '#0284c7',  // Darker blue (5.5:1 on white)
     700: '#0369a1',  // Dark blue (7:1 on white)
     900: '#0c4a6e',  // Very dark blue (12:1 on white)
@@ -86,10 +86,10 @@ export const accessibleColors = {
   
   // Accent colors
   accent: {
-    success: '#059669',      // Green (4.5:1 on white)
-    warning: '#d97706',      // Orange (4.5:1 on white)  
+    success: '#047857',      // Green (6:1 on white)
+    warning: '#c2410c',      // Orange (6:1 on white)  
     error: '#dc2626',        // Red (4.5:1 on white)
-    info: '#0ea5e9'          // Blue (4.5:1 on white)
+    info: '#0284c7'          // Blue (5.5:1 on white)
   },
   
   // Text colors with guaranteed contrast

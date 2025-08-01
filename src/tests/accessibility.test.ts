@@ -164,7 +164,7 @@ describe('Accessibility Tests', () => {
           <p style="color: #1e293b; background: #ffffff;">טקסט עיקרי</p>
           <p style="color: #475569; background: #ffffff;">טקסט משני</p>
           <p style="color: #64748b; background: #ffffff;">טקסט מעומעם</p>
-          <button style="color: #ffffff; background: #0ea5e9;">כפתור עיקרי</button>
+          <button style="color: #ffffff; background: #0284c7;">כפתור עיקרי</button>
         </div>
       `);
 

@@ -41,8 +41,6 @@ const Card: React.FC<CardProps> = ({
   const hoverStyles = hoverable ? `
     hover:scale-[1.02] hover:-translate-y-2
     cursor-pointer
-    hover-lift-gentle
-    hover-glow-primary
   ` : '';
 
   return (
@@ -98,7 +96,7 @@ const Card: React.FC<CardProps> = ({
 
       {/* Shimmer effect */}
       {hoverable && (
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-shimmer" />
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       )}
     </div>
   );

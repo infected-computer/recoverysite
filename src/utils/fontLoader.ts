@@ -9,26 +9,8 @@ interface FontConfig {
   url: string;
 }
 
-const CRITICAL_FONTS: FontConfig[] = [
-  {
-    family: 'Plex Sans Hebrew',
-    weight: '400',
-    style: 'normal',
-    url: '/src/assets/fonts/plex-sans-hebrew/PlexSansHebrew-Regular.ttf'
-  },
-  {
-    family: 'Plex Sans Hebrew',
-    weight: '600',
-    style: 'normal',
-    url: '/src/assets/fonts/plex-sans-hebrew/PlexSansHebrew-SemiBold.ttf'
-  },
-  {
-    family: 'Space Grotesk',
-    weight: '400',
-    style: 'normal',
-    url: '/src/assets/fonts/space-grotesk/SpaceGrotesk-Regular.ttf'
-  }
-];
+// Since we're using Google Fonts via CSS imports, we don't need to load fonts manually
+const CRITICAL_FONTS: FontConfig[] = [];
 
 const FALLBACK_FONTS = [
   'Assistant',
@@ -102,17 +84,21 @@ export const loadCriticalFonts = async (): Promise<void> => {
 
   console.log('🔤 Loading critical fonts...');
   
-  const loadPromises = CRITICAL_FONTS.map(font => loadFont(font));
-  const results = await Promise.allSettled(loadPromises);
+  // Since we're using Google Fonts via CSS imports, just check if they're available
+  const fontsToCheck = ['Assistant', 'Heebo', 'Rubik'];
+  let loadedCount = 0;
   
-  const successCount = results.filter(result => 
-    result.status === 'fulfilled' && result.value === true
-  ).length;
+  for (const fontFamily of fontsToCheck) {
+    if (isFontAvailable(fontFamily)) {
+      loadedCount++;
+      console.log(`✅ Font loaded successfully: ${fontFamily}`);
+    }
+  }
   
-  console.log(`🔤 Loaded ${successCount}/${CRITICAL_FONTS.length} critical fonts`);
+  console.log(`🔤 Loaded ${loadedCount}/${fontsToCheck.length} critical fonts`);
   
   // If no fonts loaded successfully, ensure fallback fonts are available
-  if (successCount === 0) {
+  if (loadedCount === 0) {
     console.log('🔤 Using fallback fonts');
     applyFallbackFonts();
   }

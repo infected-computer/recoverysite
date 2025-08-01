@@ -1,83 +1,10 @@
-/* src/styles/fonts.css */
+/* Google Fonts - Hebrew Support */
 
-/* Plex Sans Hebrew */
-@font-face {
-  font-family: 'Plex Sans Hebrew';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('/src/assets/fonts/plex-sans-hebrew/PlexSansHebrew-Regular.ttf') format('truetype');
-}
+/* Assistant - Hebrew support */
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&display=swap');
 
-@font-face {
-  font-family: 'Plex Sans Hebrew';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url('/src/assets/fonts/plex-sans-hebrew/PlexSansHebrew-Medium.ttf') format('truetype');
-}
+/* Heebo - Hebrew support */
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-@font-face {
-  font-family: 'Plex Sans Hebrew';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('/src/assets/fonts/plex-sans-hebrew/PlexSansHebrew-SemiBold.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Plex Sans Hebrew';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('/src/assets/fonts/plex-sans-hebrew/PlexSansHebrew-Bold.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Plex Sans Hebrew';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url('/src/assets/fonts/plex-sans-hebrew/PlexSansHebrew-ExtraBold.ttf') format('truetype');
-}
-
-/* Space Grotesk */
-@font-face {
-  font-family: 'Space Grotesk';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('/src/assets/fonts/space-grotesk/SpaceGrotesk-Regular.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Space Grotesk';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url('/src/assets/fonts/space-grotesk/SpaceGrotesk-Medium.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Space Grotesk';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('/src/assets/fonts/space-grotesk/SpaceGrotesk-SemiBold.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Space Grotesk';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('/src/assets/fonts/space-grotesk/SpaceGrotesk-Bold.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Space Grotesk';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url('/src/assets/fonts/space-grotesk/SpaceGrotesk-ExtraBold.ttf') format('truetype');
-}
+/* Rubik - Hebrew support */
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');

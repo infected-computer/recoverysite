@@ -1,86 +1,31 @@
+/* Import Google Fonts with Hebrew support - must be first */
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap&subset=hebrew');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap&subset=hebrew');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap&subset=hebrew');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Font Loading Optimization with Better Fallbacks */
-@font-face {
-  font-family: 'Assistant';
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: local('Assistant Light'), local('Assistant-Light'),
-       url('https://fonts.gstatic.com/s/assistant/v18/2sDPZGJYnIjSi6H75xXGZr-D.woff2') format('woff2'),
-       url('https://fonts.gstatic.com/s/assistant/v18/2sDPZGJYnIjSi6H75xXGZr-D.woff') format('woff');
-  unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
-}
-
-@font-face {
-  font-family: 'Assistant';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: local('Assistant Regular'), local('Assistant-Regular'),
-       url('https://fonts.gstatic.com/s/assistant/v18/2sDOZGJYnIjSi6H75xXGYr-D.woff2') format('woff2'),
-       url('https://fonts.gstatic.com/s/assistant/v18/2sDOZGJYnIjSi6H75xXGYr-D.woff') format('woff');
-  unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
-}
-
-@font-face {
-  font-family: 'Assistant';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: local('Assistant SemiBold'), local('Assistant-SemiBold'),
-       url('https://fonts.gstatic.com/s/assistant/v18/2sDPZGJYnIjSi6H75xXGZr-D.woff2') format('woff2'),
-       url('https://fonts.gstatic.com/s/assistant/v18/2sDPZGJYnIjSi6H75xXGZr-D.woff') format('woff');
-  unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
-}
-
-@font-face {
-  font-family: 'Assistant';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: local('Assistant Bold'), local('Assistant-Bold'),
-       url('https://fonts.gstatic.com/s/assistant/v18/2sDPZGJYnIjSi6H75xXGZr-D.woff2') format('woff2'),
-       url('https://fonts.gstatic.com/s/assistant/v18/2sDPZGJYnIjSi6H75xXGZr-D.woff') format('woff');
-  unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
-}
-
-/* Heebo fallback font */
-@font-face {
-  font-family: 'Heebo';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: local('Heebo Regular'), local('Heebo-Regular'),
-       url('https://fonts.gstatic.com/s/heebo/v21/NGSpv5_NC0k9P_v6ZUCbLRAHxK1EiS2cckOnz02SXQ.woff2') format('woff2');
-  unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
-}
-
-@font-face {
-  font-family: 'Heebo';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: local('Heebo SemiBold'), local('Heebo-SemiBold'),
-       url('https://fonts.gstatic.com/s/heebo/v21/NGSpv5_NC0k9P_v6ZUCbLRAHxK1EiSWcckOnz02SXQ.woff2') format('woff2');
-  unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
-}
 
 /* WCAG 2.2 Compliant Design Tokens - מערכת משתני העיצוב נגישה */
 :root {
   /* Primary Colors - צבעים עיקריים (4.5:1+ contrast) */
   --color-primary: #0369a1; /* כחול עיקרי - 7:1 על רקע לבן */
-  --color-primary-light: #0ea5e9; /* כחול בהיר - 4.5:1 על רקע לבן */
+  --color-primary-light: #0284c7; /* כחול בהיר - 5.5:1 על רקע לבן */
   --color-primary-dark: #0c4a6e; /* כחול כהה - 12:1 על רקע לבן */
   --color-primary-darker: #082f49; /* כחול כהה מאוד - 15:1 על רקע לבן */
+  
+  /* Secondary Colors - צבעים משניים */
+  --color-secondary: #7c3aed; /* סגול משני */
+  --color-secondary-light: #a855f7; /* סגול בהיר */
+  --color-secondary-dark: #5b21b6; /* סגול כהה */
   
   /* Surface Colors - צבעי משטח */
   --color-surface-background: #111827; /* Dark background */
   --color-surface-card: #1f2937; /* Dark card */
   --color-surface-elevated: #374151; /* Dark elevated */
   --color-surface-overlay: rgba(15, 23, 42, 0.8); /* שכבת כיסוי */
+  --color-background-section: #f8fafc; /* רקע לסקציות */
   
   /* Accent Colors - צבעי הדגשה (4.5:1+ contrast) */
   --color-accent-success: #047857; /* ירוק הצלחה - 5.9:1 על רקע לבן */
@@ -91,11 +36,13 @@
   /* Text Colors - צבעי טקסט (WCAG compliant) */
   --color-text-primary: #1e293b; /* טקסט עיקרי - 12:1 על רקע לבן */
   --color-text-secondary: #475569; /* טקסט משני - 7:1 על רקע לבן */
+  --color-text-dark: #0f172a; /* טקסט כהה */
   --color-text-muted: #64748b; /* טקסט מעומעם - 4.5:1 על רקע לבן */
   --color-text-inverse: #ffffff; /* טקסט הפוך */
   --color-text-on-primary: #ffffff; /* טקסט על רקע עיקרי */
   
   /* Border Colors - צבעי גבול */
+  --color-border: #e2e8f0; /* גבול בסיסי */
   --color-border-light: #e2e8f0; /* גבול בהיר */
   --color-border-medium: #cbd5e1; /* גבול בינוני */
   --color-border-dark: #94a3b8; /* גבול כהה */
@@ -171,10 +118,10 @@
   --secondary: 210 40% 95%; /* Light gray background */
   --secondary-foreground: 215 25% 12%; /* Dark text */
   
-  --success: 160 84% 39%; /* #059669 - 4.5:1 contrast improved */
+  --success: 160 84% 35%; /* #047857 - 6:1 contrast improved */
   --success-foreground: 0 0% 100%; /* White text on success */
   
-  --warning: 32 95% 44%; /* #d97706 - 4.5:1 contrast improved */
+  --warning: 32 95% 38%; /* #c2410c - 6:1 contrast improved */
   --warning-foreground: 0 0% 100%; /* White text on warning */
   
   --destructive: 0 84% 60%; /* Red */

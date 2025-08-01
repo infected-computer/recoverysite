@@ -20,14 +20,13 @@
     <link rel="apple-touch-icon" href="/favicon.ico" />
     
     <!-- Font Preloading for Performance -->
-    <link rel="preload" href="/src/assets/fonts/plex-sans-hebrew/PlexSansHebrew-Regular.ttf" as="font" type="font/ttf" crossorigin />
-    <link rel="preload" href="/src/assets/fonts/plex-sans-hebrew/PlexSansHebrew-SemiBold.ttf" as="font" type="font/ttf" crossorigin />
-    <link rel="preload" href="/src/assets/fonts/space-grotesk/SpaceGrotesk-Regular.ttf" as="font" type="font/ttf" crossorigin />
-    
-    <!-- Fallback to Google Fonts with font-display: swap -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    
+    <!-- Critical fonts with Hebrew support -->
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap&subset=hebrew" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap&subset=hebrew" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap&subset=hebrew" rel="stylesheet" />
     
     <link rel="stylesheet" href="/fonts.css" />
     
@@ -48,8 +47,11 @@
     <!-- Microsoft -->
     <meta name="msapplication-TileColor" content="#1e3a8a" />
     <meta name="msapplication-config" content="/browserconfig.xml" />
-    <script type="module" crossorigin src="/assets/index-BQwnEAws.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-cGQI6AM4.css">
+    <script type="module" crossorigin src="/assets/index-BuhXY0DR.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vendor-CROltiuU.js">
+    <link rel="modulepreload" crossorigin href="/assets/ui-COwBXajR.js">
+    <link rel="modulepreload" crossorigin href="/assets/router-D1okD92Y.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-BiHfND4N.css">
   </head>
 
   <body>

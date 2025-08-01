@@ -27,14 +27,14 @@ const Services: React.FC<ServicesProps> = ({
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   
-  useScrollAnimation(sectionRef, 'animate-fade-in-up');
-  useScrollAnimation(titleRef, 'animate-fade-in-down');
+  // useScrollAnimation(sectionRef, 'animate-fade-in-up');
+  // useScrollAnimation(titleRef, 'animate-fade-in-down');
 
   return (
     <section 
       ref={sectionRef}
       className={cn(
-        "relative overflow-hidden py-20 opacity-0",
+        "relative overflow-hidden py-20",
         className
       )}
       style={{
@@ -63,7 +63,7 @@ const Services: React.FC<ServicesProps> = ({
       <div className="container mx-auto px-4 relative z-10">
         
         {/* Section Title */}
-        <div ref={titleRef} className="text-center mb-16 opacity-0">
+        <div ref={titleRef} className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-text-dark-redesign mb-6">
             {title}
           </h2>

@@ -9,8 +9,8 @@ const PaymentPage: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Helmet>
-        <title>תשלום מאובטח - דוקטור פיקס שחזור קבצים</title>
-        <meta name="description" content="דף תשלום מאובטח עבור שירותי שחזור קבצים ונתונים" />
+        <title>תשלום מאובטח - דוקטור פיקס</title>
+        <meta name="description" content="דף תשלום מאובטח - הזן סכום ושלם בקלות" />
         <meta name="robots" content="noindex, nofollow" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         
@@ -37,10 +37,10 @@ const PaymentPage: React.FC = () => {
             <div className="bg-white rounded-lg shadow-lg p-8">
               <div className="text-center mb-8">
                 <h1 className="text-3xl font-bold text-gray-800 mb-4">
-                  תשלום מאובטח לשחזור קבצים
+                  תשלום מאובטח
                 </h1>
                 <p className="text-lg text-gray-600">
-                  בצעו תשלום מאובטח עבור שירותי שחזור הקבצים שלנו
+                  הזן את הסכום שברצונך לשלם ובצע תשלום מאובטח
                 </p>
               </div>
               
