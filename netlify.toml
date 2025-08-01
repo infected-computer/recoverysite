@@ -2,30 +2,44 @@
   command = "npm install && npm run build && npm run debug:build"
   functions = "netlify/functions"
   publish = "dist"
-  
+
 [build.environment]
   NODE_VERSION = "18"
 
-# Force HTTPS redirect
+[[redirects]]
+  from = "/data-recovery"
+  to = "/services/data-recovery"
+  status = 301
+
+[[redirects]]
+  from = "/remote-support"
+  to = "/services/remote-support"
+  status = 301
+
+[[redirects]]
+  from = "/system-repair"
+  to = "/services/system-repair"
+  status = 301
+
 [[redirects]]
   from = "http://recoverysite.netlify.app/*"
   to = "https://recoverysite.netlify.app/:splat"
   status = 301
   force = true
 
-# Serverless function rewrite
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
 
-# SPA redirect handled in _redirects file to avoid conflicts
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
 
-# Function configuration
 [functions]
   node_bundler = "esbuild"
 
-# Environment variables (will be overridden by actual env vars in Netlify dashboard)
 [context.production.environment]
   NODE_ENV = "production"
   RESEND_API_KEY = "${RESEND_API_KEY}"
@@ -33,34 +47,23 @@
 [context.deploy-preview.environment]
   NODE_ENV = "development"
 
-# Headers for CSS files
 [[headers]]
-  for = "*.css"
-  [headers.values]
-    Content-Type = "text/css"
-    Cache-Control = "public, max-age=31536000, immutable"
-
-# Headers for JS files
-[[headers]]
-  for = "*.js"
-  [headers.values]
-    Content-Type = "application/javascript"
-    Cache-Control = "public, max-age=31536000, immutable"
-
-# Headers for assets directory
-[[headers]]
-  for = "/assets/*.css"
+  for = "/*.css"
   [headers.values]
     Content-Type = "text/css"
     Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
-  for = "/assets/*.js"
+  for = "/*.js"
   [headers.values]
     Content-Type = "application/javascript"
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Headers for security
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
 [[headers]]
   for = "/*"
   [headers.values]
@@ -75,9 +78,4 @@
     Access-Control-Allow-Origin = "*"
     Access-Control-Allow-Headers = "Content-Type"
     Access-Control-Allow-Methods = "POST, OPTIONS"
-
-# Headers for serverless functions
-[[headers]]
-  for = "/.netlify/functions/*"
-  [headers.values]
     Cache-Control = "no-cache"
