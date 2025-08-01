@@ -47,10 +47,23 @@ function validateBuild() {
  */
 function findAssetFiles() {
   const assetsDir = path.join(DIST_DIR, 'assets');
-  const files = fs.readdirSync(assetsDir);
   
-  const cssFiles = files.filter(file => file.endsWith('.css'));
-  const jsFiles = files.filter(file => file.endsWith('.js'));
+  // Look in subdirectories
+  const cssDir = path.join(assetsDir, 'css');
+  const jsDir = path.join(assetsDir, 'js');
+  
+  let cssFiles = [];
+  let jsFiles = [];
+  
+  // Find CSS files
+  if (fs.existsSync(cssDir)) {
+    cssFiles = fs.readdirSync(cssDir).filter(file => file.endsWith('.css'));
+  }
+  
+  // Find JS files
+  if (fs.existsSync(jsDir)) {
+    jsFiles = fs.readdirSync(jsDir).filter(file => file.endsWith('.js'));
+  }
   
   console.log(`📄 Found ${cssFiles.length} CSS files:`, cssFiles);
   console.log(`📄 Found ${jsFiles.length} JS files:`, jsFiles);
@@ -68,14 +81,14 @@ function createAssetsHeaders() {
   
   // Add specific headers for each CSS file
   cssFiles.forEach(file => {
-    headersContent += `/assets/${file}\n`;
+    headersContent += `/assets/css/${file}\n`;
     headersContent += '  Content-Type: text/css\n';
     headersContent += '  Cache-Control: public, max-age=31536000, immutable\n\n';
   });
   
   // Add specific headers for each JS file
   jsFiles.forEach(file => {
-    headersContent += `/assets/${file}\n`;
+    headersContent += `/assets/js/${file}\n`;
     headersContent += '  Content-Type: application/javascript\n';
     headersContent += '  Cache-Control: public, max-age=31536000, immutable\n\n';
   });
@@ -95,7 +108,7 @@ function verifyAssetContent() {
   
   // Verify CSS files
   cssFiles.forEach(file => {
-    const filePath = path.join(DIST_DIR, 'assets', file);
+    const filePath = path.join(DIST_DIR, 'assets', 'css', file);
     const content = fs.readFileSync(filePath, 'utf8');
     
     // Check if it's actually CSS (should contain CSS rules)
@@ -108,7 +121,7 @@ function verifyAssetContent() {
   
   // Verify JS files
   jsFiles.forEach(file => {
-    const filePath = path.join(DIST_DIR, 'assets', file);
+    const filePath = path.join(DIST_DIR, 'assets', 'js', file);
     const content = fs.readFileSync(filePath, 'utf8');
     
     // Check if it's actually JS (should contain JS code)
@@ -135,13 +148,13 @@ function createDebugInfo() {
     assets: {
       css: cssFiles.map(file => ({
         name: file,
-        size: fs.statSync(path.join(DIST_DIR, 'assets', file)).size,
-        path: `/assets/${file}`
+        size: fs.statSync(path.join(DIST_DIR, 'assets', 'css', file)).size,
+        path: `/assets/css/${file}`
       })),
       js: jsFiles.map(file => ({
         name: file,
-        size: fs.statSync(path.join(DIST_DIR, 'assets', file)).size,
-        path: `/assets/${file}`
+        size: fs.statSync(path.join(DIST_DIR, 'assets', 'js', file)).size,
+        path: `/assets/js/${file}`
       }))
     }
   };
