@@ -7,14 +7,17 @@ interface SimplePaymentFormData {
   customerName: string;
 }
 
-const PaymentForm: React.FC = () => {
+interface PaymentFormProps {
+  onSubmit?: (data: SimplePaymentFormData) => void;
+  isProcessing?: boolean;
+}
+
+const PaymentForm: React.FC<PaymentFormProps> = ({ onSubmit, isProcessing = false }) => {
   const [formData, setFormData] = useState<SimplePaymentFormData>({
     amount: 0,
     customerEmail: '',
     customerName: '',
   });
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleInputChange = (field: keyof SimplePaymentFormData, value: string | number) => {
@@ -48,26 +51,25 @@ const PaymentForm: React.FC = () => {
       return;
     }
 
-    setIsSubmitting(true);
     setError(null);
 
     try {
       const paymentData = {
         amount: formData.amount,
-        currency: 'ILS',
+        currency: 'ILS' as const,
         customerEmail: formData.customerEmail || undefined,
         customerName: formData.customerName || undefined,
       };
 
       const result = await lemonSqueezyService.processPayment(paymentData);
       
-      if (!result.success) {
+      if (result.success && result.checkoutUrl) {
+        window.location.href = result.checkoutUrl;
+      } else if (!result.success) {
         throw new Error(result.error || 'התשלום נכשל. אנא נסה שוב.');
       }
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'שגיאה בעיבוד התשלום');
-    } finally {
-      setIsSubmitting(false);
+      setError(error instanceof Error ? error.message : 'אירעה שגיאה בעיבוד התשלום');
     }
   };
 
@@ -101,7 +103,7 @@ const PaymentForm: React.FC = () => {
               onChange={(e) => handleInputChange('amount', e.target.value)}
               className="block w-full pl-7 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="הזן סכום בשקלים"
-              disabled={isSubmitting}
+              disabled={isProcessing}
               required
             />
           </div>
@@ -125,7 +127,7 @@ const PaymentForm: React.FC = () => {
             onChange={(e) => handleInputChange('customerEmail', e.target.value)}
             className="block w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             placeholder="your@email.com"
-            disabled={isSubmitting}
+            disabled={isProcessing}
           />
         </div>
 
@@ -142,7 +144,7 @@ const PaymentForm: React.FC = () => {
             onChange={(e) => handleInputChange('customerName', e.target.value)}
             className="block w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             placeholder="השם המלא שלך"
-            disabled={isSubmitting}
+            disabled={isProcessing}
           />
         </div>
 
@@ -157,14 +159,14 @@ const PaymentForm: React.FC = () => {
         <div className="form-group">
           <button
             type="submit"
-            disabled={formData.amount <= 0 || isSubmitting}
+            disabled={formData.amount <= 0 || isProcessing}
             className={`w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${
-              formData.amount <= 0 || isSubmitting
+              formData.amount <= 0 || isProcessing
                 ? 'bg-gray-400 cursor-not-allowed'
                 : 'bg-blue-600 hover:bg-blue-700'
             }`}
           >
-            {isSubmitting ? (
+            {isProcessing ? (
               <span>מעבד תשלום...</span>
             ) : (
               <>

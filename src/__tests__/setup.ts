@@ -6,18 +6,59 @@ process.env.REACT_APP_LEMON_SQUEEZY_STORE_ID = 'test-store-id';
 process.env.REACT_APP_LEMON_SQUEEZY_ENVIRONMENT = 'sandbox';
 process.env.REACT_APP_HIDDEN_PAGE_ACCESS_TOKEN = 'test-access-token';
 
-// Mock window.location
-delete (window as any).location;
-(window as any).location = {
-  href: 'http://localhost:3000',
-  origin: 'http://localhost:3000',
-  pathname: '/',
-  search: '',
-  hash: '',
+// Mock import.meta.env for tests
+const mockImportMetaEnv = {
+  VITE_LEMON_SQUEEZY_API_KEY: 'test-api-key',
+  VITE_LEMON_SQUEEZY_STORE_ID: 'test-store-id',
+  VITE_LEMON_SQUEEZY_ENVIRONMENT: 'sandbox',
+  VITE_LEMON_SQUEEZY_WEBHOOK_SECRET: 'test-webhook-secret',
+  VITE_HIDDEN_PAGE_ACCESS_TOKEN: 'test-access-token',
+  DEV: true,
+};
+
+Object.defineProperty(global, 'import', {
+  value: {
+    meta: {
+      env: mockImportMetaEnv,
+    },
+  },
+  writable: true,
+});
+
+// Mock window.location (temporarily commented out due to JSDOM limitations)
+/*
+const mockLocation = {
+  _href: 'http://localhost:3000',
+  _origin: 'http://localhost:3000',
+  _pathname: '/',
+  _search: '',
+  _hash: '',
   assign: jest.fn(),
   replace: jest.fn(),
   reload: jest.fn(),
 };
+
+Object.defineProperty(window, 'location', {
+  configurable: true,
+  get: () => ({
+    href: mockLocation._href,
+    origin: mockLocation._origin,
+    pathname: mockLocation._pathname,
+    search: mockLocation._search,
+    hash: mockLocation._hash,
+    assign: mockLocation.assign,
+    replace: mockLocation.replace,
+    reload: mockLocation.reload,
+  }),
+  set: (value) => {
+    mockLocation._href = value.href || mockLocation._href;
+    mockLocation._origin = value.origin || mockLocation._origin;
+    mockLocation._pathname = value.pathname || mockLocation._pathname;
+    mockLocation._search = value.search || mockLocation._search;
+    mockLocation._hash = value.hash || mockLocation._hash;
+  },
+});
+*/
 
 // Mock console methods to reduce noise in tests
 const originalError = console.error;
@@ -52,12 +93,17 @@ afterAll(() => {
 });
 
 // Mock IntersectionObserver
-global.IntersectionObserver = class IntersectionObserver {
-  constructor() {}
-  disconnect() {}
-  observe() {}
-  unobserve() {}
-};
+global.IntersectionObserver = jest.fn().mockImplementation((callback, options) => {
+  return {
+    observe: jest.fn(),
+    unobserve: jest.fn(),
+    disconnect: jest.fn(),
+    takeRecords: jest.fn(() => []), // Add takeRecords method
+    root: null,
+    rootMargin: '',
+    thresholds: [],
+  };
+});
 
 // Mock ResizeObserver
 global.ResizeObserver = class ResizeObserver {

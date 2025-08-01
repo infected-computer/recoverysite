@@ -14,7 +14,7 @@ describe('Payment Validation Utils', () => {
     it('should validate a correct payment form', () => {
       const validData: PaymentFormData = {
         amount: 100,
-        currency: 'USD',
+        currency: 'ILS',
         customerEmail: 'test@example.com',
         customerName: 'John Doe',
       };
@@ -26,7 +26,7 @@ describe('Payment Validation Utils', () => {
     it('should reject invalid amounts', () => {
       const invalidData: PaymentFormData = {
         amount: 0,
-        currency: 'USD',
+        currency: 'ILS',
         customerEmail: 'test@example.com',
         customerName: 'John Doe',
       };
@@ -39,7 +39,7 @@ describe('Payment Validation Utils', () => {
     it('should reject invalid email addresses', () => {
       const invalidData: PaymentFormData = {
         amount: 100,
-        currency: 'USD',
+        currency: 'ILS',
         customerEmail: 'invalid-email',
         customerName: 'John Doe',
       };

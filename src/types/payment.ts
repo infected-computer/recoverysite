@@ -12,6 +12,7 @@ export interface PaymentResult {
   transactionId?: string;
   error?: string;
   receipt?: Receipt;
+  checkoutUrl?: string; // Added checkoutUrl
 }
 
 export interface Transaction {
@@ -90,6 +91,13 @@ export interface LemonSqueezyConfig {
   apiKey: string;
   storeId: string;
   environment: 'sandbox' | 'production';
+  apiBaseUrl: string;
+  webhookSecret: string;
+  redirectUrls: { // Added redirectUrls
+    SUCCESS: string;
+    ERROR: string;
+    CANCEL: string;
+  };
 }
 
 export interface LemonSqueezyCheckout {
@@ -98,13 +106,21 @@ export interface LemonSqueezyCheckout {
     attributes: {
       checkout_data: {
         custom: {
-          amount: number;
-          currency: string;
-        };
+        amount: number;
+        currency: string;
+        customer_email?: string; // Added customer_email
+        customer_name?: string; // Added customer_name
+      };
       };
       product_options: {
         name: string;
         description: string;
+        redirect_url?: string; // Added redirect_url
+      };
+      checkout_options?: { // Added checkout_options
+        embed?: boolean;
+        media?: boolean;
+        logo?: boolean;
       };
     };
     relationships: {

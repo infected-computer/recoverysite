@@ -29,7 +29,7 @@ jest.mock('../../components/common/ErrorMessage', () => {
   };
 });
 
-const { validateAccessToken } = require('../../utils/paymentValidation');
+import { validateAccessToken } from '../../utils/paymentValidation';
 
 const renderWithRouter = (component: React.ReactElement, searchParams = '') => {
   const url = `/?${searchParams}`;

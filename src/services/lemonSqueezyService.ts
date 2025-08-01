@@ -35,7 +35,7 @@ class LemonSqueezyService {
             product_options: {
               name: 'Custom Payment',
               description: `Payment of ${paymentData.amount} ${paymentData.currency}`,
-              redirect_url: getPaymentConfig().REDIRECT_URLS.SUCCESS,
+              redirect_url: this.config.redirectUrls.SUCCESS,
             },
             checkout_options: {
               embed: false,
@@ -47,7 +47,7 @@ class LemonSqueezyService {
             store: {
               data: {
                 type: 'stores',
-                id: this.config.STORE_ID,
+                id: this.config.storeId,
               },
             },
           },
@@ -63,10 +63,10 @@ class LemonSqueezyService {
         };
       }
 
-      const response = await fetch(`${this.config.API_BASE_URL}/checkouts`, {
+      const response = await fetch(`${this.config.apiBaseUrl}/checkouts`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${this.config.API_KEY}`,
+          'Authorization': `Bearer ${this.config.apiKey}`,
           'Content-Type': 'application/vnd.api+json',
           'Accept': 'application/vnd.api+json',
         },
@@ -107,13 +107,10 @@ class LemonSqueezyService {
       // Create checkout session
       const checkoutUrl = await this.createCheckout(paymentData);
 
-      // Redirect to Lemon Squeezy checkout
-      window.location.href = checkoutUrl;
-
-      // Return success result (though user will be redirected)
       return {
         success: true,
         transactionId: `pending-${Date.now()}`,
+        checkoutUrl: checkoutUrl, // Return checkout URL
       };
     } catch (error) {
       console.error('Payment processing failed:', error);
@@ -204,9 +201,9 @@ class LemonSqueezyService {
    */
   async getCheckoutStatus(checkoutId: string): Promise<any> {
     try {
-      const response = await fetch(`${this.config.API_BASE_URL}/checkouts/${checkoutId}`, {
+      const response = await fetch(`${this.config.apiBaseUrl}/checkouts/${checkoutId}`, {
         headers: {
-          'Authorization': `Bearer ${this.config.API_KEY}`,
+          'Authorization': `Bearer ${this.config.apiKey}`,
           'Accept': 'application/vnd.api+json',
         },
       });
@@ -228,7 +225,7 @@ class LemonSqueezyService {
   verifyWebhookSignature(payload: string, signature: string): boolean {
     // This would typically use crypto to verify the webhook signature
     // For now, we'll do a simple check
-    return signature === this.config.WEBHOOK_SECRET;
+    return signature === this.config.webhookSecret;
   }
 }
 

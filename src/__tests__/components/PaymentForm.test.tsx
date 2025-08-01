@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import PaymentForm from '../../components/payment/PaymentForm';
-import { PaymentFormData } from '../../types/payment';
+import { PaymentFormData, PaymentFormProps } from '../../types/payment';
 
 // Mock the hooks and services
 jest.mock('../../hooks/useSecurity', () => ({
@@ -44,14 +44,14 @@ jest.mock('../../services/transactionLogger', () => ({
 }));
 
 describe('PaymentForm', () => {
-  const user = userEvent.setup();
+  const user = (userEvent as any).setup();
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   it('should render payment form correctly', () => {
-    render(<PaymentForm />);
+    render(<PaymentForm onSubmit={jest.fn()} isProcessing={false} />);
 
     expect(screen.getByLabelText(/payment amount/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/email address/i)).toBeInTheDocument();
@@ -60,7 +60,7 @@ describe('PaymentForm', () => {
   });
 
   it('should validate required fields', async () => {
-    render(<PaymentForm />);
+    render(<PaymentForm onSubmit={jest.fn()} isProcessing={false} />);
 
     const submitButton = screen.getByRole('button', { name: /proceed to payment/i });
     
@@ -75,7 +75,7 @@ describe('PaymentForm', () => {
 
   it('should accept valid input', async () => {
     const mockOnSubmit = jest.fn();
-    render(<PaymentForm onSubmit={mockOnSubmit} />);
+    render(<PaymentForm onSubmit={mockOnSubmit} isProcessing={false} />);
 
     const amountInput = screen.getByLabelText(/payment amount/i);
     const emailInput = screen.getByLabelText(/email address/i);
@@ -101,7 +101,7 @@ describe('PaymentForm', () => {
   });
 
   it('should sanitize input values', async () => {
-    render(<PaymentForm />);
+    render(<PaymentForm onSubmit={jest.fn()} isProcessing={false} />);
 
     const nameInput = screen.getByLabelText(/full name/i);
     
@@ -120,7 +120,7 @@ describe('PaymentForm', () => {
   });
 
   it('should handle currency selection', async () => {
-    render(<PaymentForm />);
+    render(<PaymentForm onSubmit={jest.fn()} isProcessing={false} />);
 
     const currencySelect = screen.getByDisplayValue('USD');
     
@@ -130,7 +130,7 @@ describe('PaymentForm', () => {
   });
 
   it('should display amount formatting', async () => {
-    render(<PaymentForm />);
+    render(<PaymentForm onSubmit={jest.fn()} isProcessing={false} />);
 
     const amountInput = screen.getByLabelText(/payment amount/i);
     
@@ -143,7 +143,7 @@ describe('PaymentForm', () => {
   });
 
   it('should validate email format', async () => {
-    render(<PaymentForm />);
+    render(<PaymentForm onSubmit={jest.fn()} isProcessing={false} />);
 
     const emailInput = screen.getByLabelText(/email address/i);
     const submitButton = screen.getByRole('button', { name: /proceed to payment/i });
@@ -158,7 +158,7 @@ describe('PaymentForm', () => {
 
   it('should handle form submission errors', async () => {
     const mockOnSubmit = jest.fn().mockRejectedValue(new Error('Payment failed'));
-    render(<PaymentForm onSubmit={mockOnSubmit} />);
+    render(<PaymentForm onSubmit={mockOnSubmit} isProcessing={false} />);
 
     const amountInput = screen.getByLabelText(/payment amount/i);
     const submitButton = screen.getByRole('button', { name: /proceed to payment/i });
@@ -172,7 +172,7 @@ describe('PaymentForm', () => {
   });
 
   it('should clear errors when user starts typing', async () => {
-    render(<PaymentForm />);
+    render(<PaymentForm onSubmit={jest.fn()} isProcessing={false} />);
 
     const amountInput = screen.getByLabelText(/payment amount/i);
     const submitButton = screen.getByRole('button', { name: /proceed to payment/i });

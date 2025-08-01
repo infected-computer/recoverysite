@@ -1,13 +1,19 @@
 module.exports = {
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts'],
-  moduleNameMapping: {
-    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
-    '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/src/__tests__/__mocks__/fileMock.js',
+  moduleNameMapper: {
+    '\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '\.(gif|ttf|eot|svg|png)$': '<rootDir>/src/__tests__/__mocks__/fileMock.js',
   },
   transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest',
-    '^.+\\.(js|jsx)$': 'babel-jest',
+    '^.+\.(ts|tsx)$': ['ts-jest', {
+      tsconfig: './tsconfig.json',
+      isolatedModules: true,
+      diagnostics: {
+        ignoreCodes: [1343] // Ignore TS1343 for import.meta.env
+      }
+    }],
+    '^.+\.(js|jsx)$': 'babel-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   testMatch: [

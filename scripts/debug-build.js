@@ -41,7 +41,7 @@ function analyzeDistDirectory() {
         console.log(`${indent}📄 ${file} (${size}KB)`);
         
         // Check for suspicious files
-        if (file.endsWith('.js')) {
+        if (file.endsWith('.js') && file !== 'sw.js') {
           const content = fs.readFileSync(filePath, 'utf8');
           if (content.includes('<!DOCTYPE html>')) {
             console.error(`${indent}❌ ${file} contains HTML instead of JS!`);
@@ -121,6 +121,9 @@ function generateNetlifyDebug() {
     files.forEach(file => {
       const filePath = path.join(assetsDir, file);
       const stat = fs.statSync(filePath);
+      if (stat.isDirectory()) {
+        return;
+      }
       const content = fs.readFileSync(filePath, 'utf8');
       
       debugInfo.files[file] = {

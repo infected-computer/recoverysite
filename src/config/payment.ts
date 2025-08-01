@@ -3,11 +3,16 @@
 export const PAYMENT_CONFIG = {
   // Lemon Squeezy configuration
   LEMON_SQUEEZY: {
-    API_BASE_URL: 'https://api.lemonsqueezy.com/v1',
-    API_KEY: import.meta.env.VITE_LEMON_SQUEEZY_API_KEY || '',
-    STORE_ID: import.meta.env.VITE_LEMON_SQUEEZY_STORE_ID || '',
-    ENVIRONMENT: (import.meta.env.VITE_LEMON_SQUEEZY_ENVIRONMENT as 'sandbox' | 'production') || 'sandbox',
-    WEBHOOK_SECRET: import.meta.env.VITE_LEMON_SQUEEZY_WEBHOOK_SECRET || '',
+    apiBaseUrl: 'https://api.lemonsqueezy.com/v1',
+    apiKey: import.meta.env.VITE_LEMON_SQUEEZY_API_KEY || '',
+    storeId: import.meta.env.VITE_LEMON_SQUEEZY_STORE_ID || '',
+    environment: (import.meta.env.VITE_LEMON_SQUEEZY_ENVIRONMENT as 'sandbox' | 'production') || 'sandbox',
+    webhookSecret: import.meta.env.VITE_LEMON_SQUEEZY_WEBHOOK_SECRET || '',
+    redirectUrls: {
+      SUCCESS: 'https://recoverysite.netlify.app/payment-success',
+      ERROR: 'https://recoverysite.netlify.app/payment-error',
+      CANCEL: 'https://recoverysite.netlify.app/payment-cancel',
+    },
   },
 
   // Hidden page configuration
@@ -87,12 +92,3 @@ export const getPaymentConfig = () => {
   return PAYMENT_CONFIG;
 };
 
-// Add redirect URLs for Lemon Squeezy
-export const REDIRECT_URLS = {
-  SUCCESS: 'https://recoverysite.netlify.app/payment-success',
-  ERROR: 'https://recoverysite.netlify.app/payment-error',
-  CANCEL: 'https://recoverysite.netlify.app/payment-cancel',
-} as const;
-
-// Update PAYMENT_CONFIG to include redirect URLs
-(PAYMENT_CONFIG as any).REDIRECT_URLS = REDIRECT_URLS;
