@@ -134,7 +134,7 @@ export default defineConfig(({ mode }) => ({
     emptyOutDir: true,
     
     // Write bundle info for debugging
-    reportCompressedSize: true
+    reportCompressedSize: false
   },
   
   // Optimize dependencies
